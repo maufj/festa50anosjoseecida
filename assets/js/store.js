@@ -27,6 +27,14 @@ class WeddingStoreClass {
         // Senha de acesso da Área da Família: Aline@01
         savedSettings.adminPin = "Aline@01";
 
+        // Atualiza endereço para Marília - SP caso ainda conste Brasília em cache
+        if (!savedSettings.venueAddress || savedSettings.venueAddress.includes("Brasília") || savedSettings.venueAddress.includes("Brasilia")) {
+          savedSettings.venueAddress = DEFAULT_WEDDING_DATA.settings.venueAddress;
+          savedSettings.venueGoogleMapsUrl = DEFAULT_WEDDING_DATA.settings.venueGoogleMapsUrl;
+          savedSettings.venueWazeUrl = DEFAULT_WEDDING_DATA.settings.venueWazeUrl;
+          savedSettings.venueMapQuery = DEFAULT_WEDDING_DATA.settings.venueMapQuery;
+        }
+
         // Garante que seções removidas permaneçam desativadas
         const visibility = { ...DEFAULT_WEDDING_DATA.settings.sectionsVisibility, ...(savedSettings.sectionsVisibility || {}) };
         visibility.story = false;
@@ -34,6 +42,7 @@ class WeddingStoreClass {
         visibility.weddingPhotos = true;
         visibility.guestPhotos = false;
         visibility.messages = false;
+        visibility.gifts = true;
         savedSettings.sectionsVisibility = visibility;
 
         return {

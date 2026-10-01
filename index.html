@@ -35,11 +35,13 @@
         </span>
       </a>
 
-      <!-- Menu Desktop (4 Seções Principais) -->
-      <nav class="hidden lg:flex items-center gap-4 xl:gap-6 2xl:gap-8 text-xs uppercase tracking-wider font-semibold text-stone-600 whitespace-nowrap">
-        <a href="#sec-big-day" class="hover:text-amber-700 transition-colors py-2 whitespace-nowrap">A Celebração</a>
+      <!-- Menu Desktop (Seções Principais) -->
+      <nav class="hidden lg:flex items-center gap-3 xl:gap-5 2xl:gap-6 text-xs uppercase tracking-wider font-semibold text-stone-600 whitespace-nowrap">
+        <a href="#sec-hero" class="hover:text-amber-700 transition-colors py-2 whitespace-nowrap">Início</a>
+        <a href="#sec-big-day" class="hover:text-amber-700 transition-colors py-2 whitespace-nowrap">Celebração</a>
         <a href="#sec-wedding-photos" class="hover:text-amber-700 transition-colors py-2 whitespace-nowrap">Fotos das Bodas</a>
         <a href="#sec-attended" class="hover:text-amber-700 transition-colors py-2 whitespace-nowrap">Presença</a>
+        <a href="#sec-gifts" class="hover:text-amber-700 transition-colors py-2 whitespace-nowrap">Presentes</a>
         <a href="#sec-venue" class="hover:text-amber-700 transition-colors py-2 whitespace-nowrap">Local</a>
       </nav>
 
@@ -64,12 +66,14 @@
       </div>
     </div>
 
-    <!-- Gaveta Menu Mobile (4 Seções Principais) -->
+    <!-- Gaveta Menu Mobile (Seções Principais) -->
     <div id="mobile-menu" class="hidden lg:hidden bg-white/95 border-b border-amber-100 px-6 py-4 space-y-3 text-sm font-medium text-stone-700 shadow-xl">
-      <a href="#sec-big-day" class="block py-1 hover:text-amber-700">🥂 A Celebração</a>
-      <a href="#sec-wedding-photos" class="block py-1 hover:text-amber-700">📷 Fotos das Bodas</a>
-      <a href="#sec-attended" class="block py-1 hover:text-amber-700">💍 Presença (Confirmar)</a>
-      <a href="#sec-venue" class="block py-1 hover:text-amber-700">📍 Local</a>
+      <a href="#sec-hero" onclick="weddingApp.toggleMobileMenu()" class="block py-1 hover:text-amber-700">🏠 Início</a>
+      <a href="#sec-big-day" onclick="weddingApp.toggleMobileMenu()" class="block py-1 hover:text-amber-700">🥂 Celebração</a>
+      <a href="#sec-wedding-photos" onclick="weddingApp.toggleMobileMenu()" class="block py-1 hover:text-amber-700">📷 Fotos das Bodas</a>
+      <a href="#sec-attended" onclick="weddingApp.toggleMobileMenu()" class="block py-1 hover:text-amber-700">💍 Presença (Confirmar)</a>
+      <a href="#sec-gifts" onclick="weddingApp.toggleMobileMenu()" class="block py-1 hover:text-amber-700">🎁 Presentes (PIX)</a>
+      <a href="#sec-venue" onclick="weddingApp.toggleMobileMenu()" class="block py-1 hover:text-amber-700">📍 Local</a>
 
       <div class="pt-2 border-t border-amber-100">
         <button onclick="weddingApp.openWhatsAppRsvp(); weddingApp.toggleMobileMenu();" class="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs flex items-center justify-center gap-2 shadow-md">
@@ -215,7 +219,7 @@
               <span class="text-3xl mb-2 block">📍</span>
               <span class="text-xs uppercase tracking-widest text-stone-400 font-semibold block">Local da Celebração</span>
               <h4 id="big-day-venue" class="font-serif font-bold text-stone-800 text-lg sm:text-xl mt-1">Chácara Sagrado Coração de Jesus</h4>
-              <p id="big-day-address" class="text-stone-500 text-xs sm:text-sm mt-1">Chácara Sagrado Coração de Jesus, Brasília - DF</p>
+              <p id="big-day-address" class="text-stone-500 text-xs sm:text-sm mt-1">Chácara Sagrado Coração de Jesus, Marília - SP</p>
             </div>
           </div>
 
@@ -337,6 +341,49 @@
     </div>
   </section>
 
+  <!-- =========================================================================
+       LISTA DE PRESENTES & PIX
+       ========================================================================= -->
+  <section id="sec-gifts" class="py-20 md:py-28 relative">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-14">
+        <div class="wedding-badge mb-3">🎁 Homenagem & Mimo</div>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-stone-800 mb-3">
+          Presente aos Homenageados
+        </h2>
+        <div class="gold-divider mx-auto">
+          <span class="text-amber-600 text-lg">✦</span>
+        </div>
+        <p class="text-stone-600 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
+          O maior e melhor presente é ter você conosco comemorando nossos 50 anos de história! Mas para quem deseja nos agraciar com uma lembrança ou mimo, disponibilizamos com muito carinho a chave PIX da família:
+        </p>
+      </div>
+
+      <div class="max-w-xl mx-auto bg-white rounded-3xl border border-amber-200/80 shadow-xl overflow-hidden text-center p-6 sm:p-10 relative">
+        <div class="w-16 h-16 rounded-2xl bg-amber-50 border border-amber-200 flex items-center justify-center mx-auto mb-4 text-3xl shadow-xs">
+          🎁
+        </div>
+
+        <span class="text-xs uppercase tracking-widest text-amber-700 font-bold block mb-1">Chave PIX (E-mail)</span>
+        <div class="bg-stone-50 border border-stone-200/80 rounded-2xl p-4 sm:p-5 my-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div class="text-center sm:text-left select-all">
+            <span class="text-[11px] uppercase tracking-wider text-stone-400 font-semibold block">Chave</span>
+            <span id="gifts-pix-key" class="font-mono text-sm sm:text-base font-bold text-stone-800 break-all">bodas.jose.cida@gmail.com</span>
+          </div>
+
+          <button id="btn-copy-pix" onclick="weddingApp.copyPixKey()" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-semibold text-xs sm:text-sm tracking-wide shadow-sm transition flex items-center justify-center gap-2 shrink-0 cursor-pointer">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+            <span>Copiar Chave</span>
+          </button>
+        </div>
+
+        <div class="space-y-1 text-xs sm:text-sm text-stone-500">
+          <p><strong class="text-stone-700 font-semibold">Favorecido:</strong> <span id="gifts-pix-recipient">José Ferreira e Maria Aparecida (Cida)</span></p>
+          <p class="text-stone-400 text-xs mt-2 italic">Agradecemos de todo coração por fazer parte da nossa jornada de amor e fé! 💛</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- =========================================================================
        4. LOCAL DAS BODAS DE OURO (MAPA & LOCALIZAÇÃO)
@@ -361,7 +408,7 @@
             <span class="text-xs uppercase tracking-widest text-amber-700 font-bold mb-2 block">Nosso Ponto de Encontro</span>
             <h3 id="venue-card-name" class="font-serif text-2xl md:text-3xl font-bold text-stone-800 mb-4">Chácara Sagrado Coração de Jesus</h3>
             <p id="venue-card-address" class="text-stone-600 text-sm md:text-base mb-6 leading-relaxed">
-              Chácara Sagrado Coração de Jesus, Brasília - DF
+              Chácara Sagrado Coração de Jesus, Marília - SP
             </p>
 
             <div class="space-y-3 pt-4 border-t border-stone-200">
@@ -386,7 +433,7 @@
         <!-- Mapa Ilustrativo / Interativo Elegante -->
         <div class="lg:col-span-7 h-72 sm:h-80 lg:h-auto min-h-[300px] sm:min-h-[360px] relative bg-stone-200 overflow-hidden">
           <iframe 
-            src="https://maps.google.com/maps?q=Chacara+Sagrado+Coracao+de+Jesus+Brasilia&t=&z=14&ie=UTF8&iwloc=&output=embed" 
+            src="https://maps.google.com/maps?q=Chacara+Sagrado+Coracao+de+Jesus+Marilia+SP&t=&z=14&ie=UTF8&iwloc=&output=embed" 
             class="w-full h-full border-0 grayscale hover:grayscale-0 transition-all duration-700" 
             allowfullscreen="" 
             loading="lazy">

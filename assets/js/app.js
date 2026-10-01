@@ -98,7 +98,11 @@ class WeddingApp {
     this.toggleSectionElement("sec-attended", vis.attended);
     this.renderAttendedGuests();
 
-    // 6. Local & Mapa
+    // 6. Presentes & PIX
+    this.toggleSectionElement("sec-gifts", vis.gifts);
+    this.renderGifts(s);
+
+    // 7. Local & Mapa
     this.toggleSectionElement("sec-venue", vis.venue);
     this.renderVenue(s);
 
@@ -579,6 +583,39 @@ class WeddingApp {
     }
     WeddingStore.likeMessage(id);
     this.renderMessages();
+  }
+
+  // 6. PRESENTES & PIX
+  renderGifts(s) {
+    const pixKeyEl = document.getElementById("gifts-pix-key");
+    const pixRecipientEl = document.getElementById("gifts-pix-recipient");
+    if (pixKeyEl) pixKeyEl.textContent = s.pixKey || "bodas.jose.cida@gmail.com";
+    if (pixRecipientEl) pixRecipientEl.textContent = s.pixRecipient || "José Ferreira e Maria Aparecida (Cida)";
+  }
+
+  copyPixKey() {
+    const s = WeddingStore.getSettings();
+    const key = s.pixKey || "bodas.jose.cida@gmail.com";
+    const onDone = () => {
+      const btn = document.getElementById("btn-copy-pix");
+      if (btn) {
+        const origContent = btn.innerHTML;
+        btn.innerHTML = `<span>✓</span><span>Chave Copiada! ✨</span>`;
+        btn.classList.add("!bg-emerald-600", "!text-white");
+        setTimeout(() => {
+          btn.innerHTML = origContent;
+          btn.classList.remove("!bg-emerald-600", "!text-white");
+        }, 3000);
+      }
+    };
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(key).then(onDone).catch(() => {
+        prompt("Copie a Chave PIX:", key);
+      });
+    } else {
+      prompt("Copie a Chave PIX:", key);
+    }
   }
 
   // 10. LOCAL DO CASAMENTO & CALENDÁRIO

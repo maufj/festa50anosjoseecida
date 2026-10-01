@@ -14,10 +14,10 @@ const DEFAULT_WEDDING_DATA = {
     weddingDate: "2026-12-19T17:00:00", // Formato ISO para contagem regressiva precisa
     eventTime: "17:00h (Recepção às 16:30h)",
     venueName: "Chácara Sagrado Coração de Jesus",
-    venueAddress: "Chácara Sagrado Coração de Jesus, Brasília - DF",
-    venueMapQuery: "Chacara Sagrado Coracao de Jesus Brasilia DF",
-    venueGoogleMapsUrl: "https://maps.google.com/?q=Chacara+Sagrado+Coracao+de+Jesus+Brasilia",
-    venueWazeUrl: "https://waze.com/ul?q=Chacara+Sagrado+Coracao+de+Jesus+Brasilia",
+    venueAddress: "Chácara Sagrado Coração de Jesus, Marília - SP",
+    venueMapQuery: "Chacara Sagrado Coracao de Jesus Marilia SP",
+    venueGoogleMapsUrl: "https://maps.google.com/?q=Chacara+Sagrado+Coracao+de+Jesus+Marilia+SP",
+    venueWazeUrl: "https://waze.com/ul?q=Chacara+Sagrado+Coracao+de+Jesus+Marilia+SP",
     dressCode: "",
     pixKey: "bodas.jose.cida@gmail.com",
     pixKeyType: "E-mail",
@@ -38,7 +38,7 @@ const DEFAULT_WEDDING_DATA = {
       guestPhotos: false,
       attended: true,
       messages: false,
-      gifts: false,
+      gifts: true,
       venue: true,
       music: true,
       finalMessage: true
