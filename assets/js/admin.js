@@ -519,6 +519,12 @@ class WeddingAdminPanel {
                 👥 ${g.count || "1 pessoa"}
               </span>
             </div>
+            ${g.companions && g.companions.length > 0 ? `
+              <div class="text-xs text-amber-900 mt-1.5 flex flex-wrap items-center gap-1.5 font-medium">
+                <span class="text-stone-500 text-[11px]">Quem vai:</span>
+                ${g.companions.map(c => `<span class="bg-amber-100/90 text-amber-950 px-2 py-0.5 rounded-md border border-amber-200/80 text-[11px] font-semibold">${c}</span>`).join("")}
+              </div>
+            ` : ""}
             ${g.message ? `<p class="text-xs text-stone-600 italic mt-1 bg-stone-50 px-2.5 py-1 rounded-lg border border-stone-100">"${g.message}"</p>` : ""}
           </div>
         </div>

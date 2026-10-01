@@ -61,6 +61,9 @@ class WeddingApp {
     // Banner de Confirmação de Presença
     this.initRsvpBanner();
 
+    // Campos Dinâmicos de Acompanhantes
+    this.updateCompanionFields();
+
     // Assina mudanças na store para re-renderização em tempo real
     WeddingStore.subscribe(() => {
       this.applyTheme();
@@ -392,6 +395,50 @@ class WeddingApp {
     window.open(url, "_blank");
   }
 
+  updateCompanionFields() {
+    const countSelect = document.getElementById("rsvp-guest-count");
+    const container = document.getElementById("rsvp-companions-container");
+    const inputsBox = document.getElementById("rsvp-companions-inputs");
+    if (!countSelect || !container || !inputsBox) return;
+
+    const val = countSelect.value;
+    let numPeople = 1;
+    if (val.includes("2")) numPeople = 2;
+    else if (val.includes("3")) numPeople = 3;
+    else if (val.includes("4")) numPeople = 4;
+    else if (val.includes("5")) numPeople = 5;
+
+    // Se for apenas 1 pessoa (apenas eu), oculta a caixa de acompanhantes
+    if (numPeople <= 1) {
+      container.classList.add("hidden");
+      inputsBox.innerHTML = "";
+      return;
+    }
+
+    container.classList.remove("hidden");
+
+    // Salva valores digitados anteriormente para não apagar caso o usuário troque de opção
+    const prevInputs = Array.from(inputsBox.querySelectorAll(".rsvp-companion-input"));
+    const prevValues = prevInputs.map(i => i.value);
+
+    let html = "";
+    for (let i = 2; i <= numPeople; i++) {
+      const prevVal = prevValues[i - 2] || "";
+      const label = (i === 5 && val.includes("mais"))
+        ? `Nome do 5º Convidado (e demais)`
+        : `Nome do ${i}º Convidado / Acompanhante`;
+      const placeholder = i === 2 ? "Ex: Maria Silva (Esposa)" : i === 3 ? "Ex: Lucas Silva (Filho)" : "Nome do acompanhante";
+
+      html += `
+        <div>
+          <label class="block text-[11px] font-semibold text-amber-900 uppercase tracking-wider mb-1">${label}</label>
+          <input type="text" class="rsvp-companion-input w-full px-3.5 py-2.5 rounded-xl border border-amber-200 bg-white focus:outline-none focus:border-amber-500 text-sm shadow-xs" placeholder="${placeholder}" value="${prevVal.replace(/"/g, '&quot;')}">
+        </div>
+      `;
+    }
+    inputsBox.innerHTML = html;
+  }
+
   submitRsvpForm() {
     const nameEl = document.getElementById("rsvp-guest-name");
     const countEl = document.getElementById("rsvp-guest-count");
@@ -407,22 +454,45 @@ class WeddingApp {
       return;
     }
 
+    // Coleta nomes dos acompanhantes
+    const companionInputs = document.querySelectorAll(".rsvp-companion-input");
+    const companions = [];
+    companionInputs.forEach(input => {
+      const val = input.value.trim();
+      if (val) companions.push(val);
+    });
+
     const s = WeddingStore.getSettings();
     let text = `Olá! Gostaria de confirmar nossa presença na celebração das Bodas de Ouro de ${s.groomName} & ${s.brideName} (19/12/2026)! 🥂💛\n\n`;
-    text += `👤 Nome: ${name}\n`;
+    text += `👤 Responsável: ${name}\n`;
     text += `👥 Total de Pessoas: ${count}\n`;
+
+    if (companions.length > 0) {
+      text += `\n📋 Quem vai:\n`;
+      text += `  1. ${name} (titular)\n`;
+      companions.forEach((comp, idx) => {
+        text += `  ${idx + 2}. ${comp}\n`;
+      });
+    }
+
     if (note) {
-      text += `💬 Observação / Recado: ${note}\n`;
+      text += `\n💬 Observação / Recado: ${note}\n`;
     }
     text += `\nMuito obrigado pelo convite e carinho! Mal podemos esperar para comemorar juntos esse momento inesquecível! ✨`;
 
     const now = new Date();
     const dateFormatted = `${now.toLocaleDateString("pt-BR")} às ${now.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}`;
 
+    let attendeesDisplayName = name;
+    if (companions.length > 0) {
+      attendeesDisplayName += ` (+ ${companions.join(", ")})`;
+    }
+
     // Registra a presença localmente com o dia e horário exato da confirmação
     WeddingStore.addAttendedGuest({
-      name: name,
+      name: attendeesDisplayName,
       count: count,
+      companions: companions,
       date: dateFormatted,
       message: note ? note : `Presença confirmada (${count})! Parabéns ao casal pelos 50 anos de amor! 💛`,
       photo: `https://images.unsplash.com/photo-${1534528741775 + (Math.floor(Math.random() * 100))}?auto=format&fit=crop&w=200&q=80`
@@ -433,6 +503,8 @@ class WeddingApp {
 
     if (nameEl) nameEl.value = "";
     if (noteEl) noteEl.value = "";
+    companionInputs.forEach(input => input.value = "");
+    this.updateCompanionFields();
 
     this.openWhatsAppRsvp(text);
   }
