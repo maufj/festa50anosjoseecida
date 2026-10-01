@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>José & Cida | Bodas de Ouro - 50 Anos de Amor</title>
+  <meta name="description" content="Celebre conosco as Bodas de Ouro de José e Cida. 50 anos de amor, cumplicidade e história em família.">
+
+  <!-- Fontes Nobres do Google: Playfair Display, Cormorant Garamond, Great Vibes e Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS via CDN com suporte completo aos utilitários modernos -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Estilos Customizados & Paletas Dinâmicas -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body class="theme-gold text-stone-800 antialiased selection:bg-amber-200 selection:text-amber-900">
+
+  <!-- Canvas de Pétalas e Brilhos Sutis Flutuantes -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- =========================================================================
+       BARRA DE NAVEGAÇÃO SUPERIOR FIXA
+       ========================================================================= -->
+  <header class="fixed top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-b border-amber-100/80 shadow-xs transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2 sm:gap-4">
+      <!-- Monograma / Nomes dos Homenageados -->
+      <a href="#sec-hero" class="shrink-0 flex items-center gap-1.5 sm:gap-2 group py-1">
+        <span class="text-xl sm:text-2xl text-amber-600 font-serif leading-none">🥂</span>
+        <span id="nav-couple-names" class="font-script text-2xl sm:text-3xl text-stone-900 group-hover:text-amber-700 transition leading-none whitespace-nowrap">
+          José & Cida
+        </span>
+      </a>
+
+      <!-- Menu Desktop (4 Seções Principais) -->
+      <nav class="hidden lg:flex items-center gap-4 xl:gap-6 2xl:gap-8 text-xs uppercase tracking-wider font-semibold text-stone-600 whitespace-nowrap">
+        <a href="#sec-big-day" class="hover:text-amber-700 transition-colors py-2 whitespace-nowrap">A Celebração</a>
+        <a href="#sec-wedding-photos" class="hover:text-amber-700 transition-colors py-2 whitespace-nowrap">Fotos das Bodas</a>
+        <a href="#sec-attended" class="hover:text-amber-700 transition-colors py-2 whitespace-nowrap">Presença</a>
+        <a href="#sec-venue" class="hover:text-amber-700 transition-colors py-2 whitespace-nowrap">Local</a>
+      </nav>
+
+      <!-- Ações: Botão Confirmar Presença WhatsApp + Admin + Menu Mobile -->
+      <div class="shrink-0 flex items-center gap-1.5 sm:gap-2.5">
+        <button onclick="weddingApp.openWhatsAppRsvp()" class="h-9 px-3 sm:px-4 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-sm transition-all transform hover:scale-105 flex items-center gap-1.5 whitespace-nowrap shrink-0" title="Confirmar Presença pelo WhatsApp">
+          <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+          <span class="hidden sm:inline whitespace-nowrap">Confirmar </span><span class="whitespace-nowrap">Presença</span>
+        </button>
+
+        <button class="btn-open-admin h-9 px-3 sm:px-3.5 rounded-full border border-amber-300/80 bg-amber-50/80 hover:bg-amber-100 text-amber-800 text-xs font-semibold transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0" title="Acesso dos Homenageados / Família (Administração)">
+          <span class="text-sm">🔐</span>
+          <span class="hidden sm:inline whitespace-nowrap">Área da Família</span>
+        </button>
+
+        <!-- Botão Menu Mobile -->
+        <button id="mobile-menu-btn" class="h-9 w-9 lg:hidden flex items-center justify-center rounded-xl text-stone-700 hover:bg-amber-50/80 focus:outline-none transition shrink-0" aria-label="Abrir menu">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Gaveta Menu Mobile (4 Seções Principais) -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-white/95 border-b border-amber-100 px-6 py-4 space-y-3 text-sm font-medium text-stone-700 shadow-xl">
+      <a href="#sec-big-day" class="block py-1 hover:text-amber-700">🥂 A Celebração</a>
+      <a href="#sec-wedding-photos" class="block py-1 hover:text-amber-700">📷 Fotos das Bodas</a>
+      <a href="#sec-attended" class="block py-1 hover:text-amber-700">💍 Presença (Confirmar)</a>
+      <a href="#sec-venue" class="block py-1 hover:text-amber-700">📍 Local</a>
+
+      <div class="pt-2 border-t border-amber-100">
+        <button onclick="weddingApp.openWhatsAppRsvp(); weddingApp.toggleMobileMenu();" class="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs flex items-center justify-center gap-2 shadow-md">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+          <span>Confirmar Presença pelo WhatsApp</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       1. PÁGINA INICIAL (HERO)
+       ========================================================================= -->
+  <section id="sec-hero" class="relative min-h-screen flex items-center justify-center text-center px-4 pt-20 sm:pt-24 pb-16 overflow-hidden">
+    <!-- Imagem de Fundo em Alta Resolução com Filtro Editorial -->
+    <div class="absolute inset-0 z-0">
+      <img src="assets/images/hero-elderly-hands.jpg" alt="José e Cida - Bodas de Ouro" class="w-full h-full object-cover object-center transform scale-105 transition-transform duration-1000 ease-out">
+      <!-- Gradientes Luxuosos: Champagne e Sombra Nobre -->
+      <div class="absolute inset-0 bg-gradient-to-b from-stone-900/65 via-stone-900/40 to-stone-900/80"></div>
+    </div>
+
+    <!-- Conteúdo Emocionante Central -->
+    <div class="relative z-10 max-w-4xl mx-auto text-white py-10 sm:py-16 px-2 sm:px-4">
+      <div class="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-amber-200 text-xs sm:text-sm uppercase tracking-widest font-semibold mb-4 sm:mb-6 animate-pulse">
+        <span id="hero-title-tag">Bodas de Ouro • 50 Anos de Amor! 💛</span>
+      </div>
+
+      <h1 class="font-script text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-amber-100 drop-shadow-lg mb-1 sm:mb-2">
+        <span id="hero-groom-name">José</span>
+      </h1>
+      <div class="font-serif text-2xl sm:text-3xl md:text-4xl text-amber-300 font-light italic my-1">&</div>
+      <h1 class="font-script text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-amber-100 drop-shadow-lg mb-4 sm:mb-6">
+        <span id="hero-bride-name">Cida</span>
+      </h1>
+
+      <div class="gold-divider mx-auto my-4 sm:my-6">
+        <span class="text-amber-300 text-lg sm:text-xl">✦</span>
+      </div>
+
+      <p id="hero-subtitle" class="font-serif italic text-base sm:text-xl md:text-2xl text-stone-200 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed drop-shadow px-2">
+        "Cinco décadas de cumplicidade, fé, família e uma linda história compartilhada."
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full max-w-md sm:max-w-none mx-auto">
+        <button onclick="weddingApp.openWhatsAppRsvp()" class="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm md:text-base font-semibold tracking-wider uppercase transition shadow-2xl flex items-center justify-center gap-2.5 border border-emerald-400/40 transform hover:scale-105">
+          <svg class="w-5 h-5 fill-current shrink-0" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+          <span>Confirmar Presença</span>
+        </button>
+        <a href="#sec-big-day" class="w-full sm:w-auto btn-primary-wedding px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-xs sm:text-sm md:text-base font-semibold tracking-wider uppercase transition shadow-2xl flex items-center justify-center text-center">
+          A Celebração ✨
+        </a>
+      </div>
+    </div>
+
+    <!-- Indicador de Rolagem Suave -->
+    <a href="#sec-countdown" class="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/70 hover:text-white transition flex flex-col items-center gap-1">
+      <span class="text-[11px] uppercase tracking-widest">Rolar</span>
+      <svg class="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+      </svg>
+    </a>
+  </section>
+
+  <!-- =========================================================================
+       2. CONTAGEM REGRESSIVA (COUNTDOWN)
+       ========================================================================= -->
+  <section id="sec-countdown" class="py-16 md:py-20 bg-stone-50/80 border-b border-amber-100/60 relative">
+    <div class="max-w-5xl mx-auto px-4 text-center">
+      <div class="wedding-badge mb-3">⏳ Jubileu de Ouro</div>
+      <h2 id="countdown-title" class="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-stone-800 mb-2">
+        Contando os dias para a comemoração das nossas Bodas de Ouro
+      </h2>
+      <p class="text-stone-500 text-sm md:text-base mb-10">Cada segundo nos aproxima do momento mais esperado de nossas vidas.</p>
+
+      <!-- Grid de Cartões da Contagem -->
+      <div id="countdown-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6 max-w-3xl mx-auto">
+        <div class="bg-white p-4 sm:p-6 md:p-8 rounded-2xl border border-amber-100 shadow-sm hover:shadow-md transition text-center">
+          <span id="cd-days" class="block font-serif text-3xl sm:text-4xl md:text-6xl font-bold text-amber-700">00</span>
+          <span class="text-[11px] sm:text-xs md:text-sm uppercase tracking-widest text-stone-500 font-semibold mt-1 sm:mt-2 block">Dias</span>
+        </div>
+        <div class="bg-white p-4 sm:p-6 md:p-8 rounded-2xl border border-amber-100 shadow-sm hover:shadow-md transition text-center">
+          <span id="cd-hours" class="block font-serif text-3xl sm:text-4xl md:text-6xl font-bold text-amber-700">00</span>
+          <span class="text-[11px] sm:text-xs md:text-sm uppercase tracking-widest text-stone-500 font-semibold mt-1 sm:mt-2 block">Horas</span>
+        </div>
+        <div class="bg-white p-4 sm:p-6 md:p-8 rounded-2xl border border-amber-100 shadow-sm hover:shadow-md transition text-center">
+          <span id="cd-minutes" class="block font-serif text-3xl sm:text-4xl md:text-6xl font-bold text-amber-700">00</span>
+          <span class="text-[11px] sm:text-xs md:text-sm uppercase tracking-widest text-stone-500 font-semibold mt-1 sm:mt-2 block">Minutos</span>
+        </div>
+        <div class="bg-white p-4 sm:p-6 md:p-8 rounded-2xl border border-amber-100 shadow-sm hover:shadow-md transition text-center">
+          <span id="cd-seconds" class="block font-serif text-3xl sm:text-4xl md:text-6xl font-bold text-amber-700">00</span>
+          <span class="text-[11px] sm:text-xs md:text-sm uppercase tracking-widest text-stone-500 font-semibold mt-1 sm:mt-2 block">Segundos</span>
+        </div>
+      </div>
+
+      <!-- Mensagem especial quando o dia chegar -->
+      <div id="countdown-celebrate" class="hidden max-w-2xl mx-auto p-8 rounded-2xl bg-amber-50 border border-amber-200"></div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       1. A CELEBRAÇÃO (DETALHES DA RENOVAÇÃO DE VOTOS E FESTA)
+       ========================================================================= -->
+  <section id="sec-big-day" class="py-20 md:py-28 relative">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-16">
+        <div class="wedding-badge mb-3">🥂 Celebração das Bodas de Ouro</div>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-stone-800 mb-3">
+          50 Anos de Amor Merecem Uma Grande Comemoração!
+        </h2>
+        <div class="gold-divider mx-auto">
+          <span class="text-amber-600 text-lg">👑</span>
+        </div>
+        <p class="text-stone-600 max-w-xl mx-auto text-sm md:text-base">
+          Preparamos cada detalhe com amor e carinho para celebrar essa grande bênção ao lado de quem amamos.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+        <!-- Foto Destaque do Casal / Local -->
+        <div class="lg:col-span-5 photo-zoom-container rounded-3xl shadow-xl border-4 border-white overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=80" alt="Celebração das Bodas de Ouro" class="h-72 sm:h-96 lg:h-[480px] w-full object-cover">
+        </div>
+
+        <!-- Cards com Informações Práticas -->
+        <div class="lg:col-span-7 space-y-4 sm:space-y-6">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+            <!-- Data -->
+            <div class="p-5 sm:p-6 rounded-2xl bg-white border border-amber-100 shadow-sm">
+              <span class="text-3xl mb-2 block">📅</span>
+              <span class="text-xs uppercase tracking-widest text-stone-400 font-semibold block">Data</span>
+              <h4 id="big-day-date" class="font-serif font-bold text-stone-800 text-base sm:text-lg mt-1">Carregando data...</h4>
+            </div>
+
+            <!-- Horário -->
+            <div class="p-5 sm:p-6 rounded-2xl bg-white border border-amber-100 shadow-sm">
+              <span class="text-3xl mb-2 block">🕐</span>
+              <span class="text-xs uppercase tracking-widest text-stone-400 font-semibold block">Horário</span>
+              <h4 id="big-day-time" class="font-serif font-bold text-stone-800 text-base sm:text-lg mt-1">17:00h (Recepção às 16:30h)</h4>
+            </div>
+
+            <!-- Local -->
+            <div class="p-5 sm:p-6 rounded-2xl bg-white border border-amber-100 shadow-sm sm:col-span-2">
+              <span class="text-3xl mb-2 block">📍</span>
+              <span class="text-xs uppercase tracking-widest text-stone-400 font-semibold block">Local da Celebração</span>
+              <h4 id="big-day-venue" class="font-serif font-bold text-stone-800 text-lg sm:text-xl mt-1">Chácara Sagrado Coração de Jesus</h4>
+              <p id="big-day-address" class="text-stone-500 text-xs sm:text-sm mt-1">Chácara Sagrado Coração de Jesus, Brasília - DF</p>
+            </div>
+          </div>
+
+          <div class="pt-2 flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
+            <button onclick="weddingApp.openWhatsAppRsvp()" class="btn-primary-wedding bg-emerald-600 hover:bg-emerald-700 border-emerald-500 px-5 sm:px-6 py-3.5 rounded-xl font-semibold text-xs sm:text-sm inline-flex items-center justify-center gap-2 shadow-md w-full sm:w-auto">
+              <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+              <span>Confirmar Presença</span>
+            </button>
+            <a id="btn-big-day-routes" href="#" target="_blank" class="btn-primary-wedding px-5 sm:px-6 py-3.5 rounded-xl font-semibold text-xs sm:text-sm inline-flex items-center justify-center gap-2 w-full sm:w-auto">
+              <span>🗺️</span> Como chegar
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       2. FOTOS DAS BODAS DE OURO (ÁLBUM COMEMORATIVO)
+       ========================================================================= -->
+  <section id="sec-wedding-photos" class="py-20 md:py-28 bg-stone-50/70 border-t border-b border-amber-100/60 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <div class="wedding-badge mb-3">📷 O Registro das Bodas</div>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-stone-800 mb-3">Fotos da Nossa Celebração</h2>
+        <div class="gold-divider mx-auto">
+          <span class="text-amber-600 text-lg">✨</span>
+        </div>
+        <p class="text-stone-600 max-w-xl mx-auto text-sm md:text-base">
+          "50 anos guardados com carinho em cada foto, em cada abraço e em cada sorriso."
+        </p>
+      </div>
+
+      <div id="wedding-gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Renderizado dinamicamente via app.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       3. CONFIRMAÇÃO DE PRESENÇA (DIRETO NO WHATSAPP CADASTRADO)
+       ========================================================================= -->
+  <section id="sec-attended" class="py-20 md:py-28 relative">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-14">
+        <div class="wedding-badge mb-3">🥂 Presença & Confirmação</div>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-stone-800 mb-3">
+          Confirme sua Presença nas Bodas de Ouro
+        </h2>
+        <div class="gold-divider mx-auto">
+          <span class="text-amber-600 text-lg">💛</span>
+        </div>
+        <p class="text-stone-600 max-w-xl mx-auto text-sm md:text-base leading-relaxed">
+          Sua presença é o maior presente para o Seu José e a Dona Cida. Por favor, confirme até o dia da celebração para organizarmos tudo com muito amor e carinho!
+        </p>
+      </div>
+
+      <!-- Card Central Nobre de Confirmação via WhatsApp -->
+      <div class="bg-white rounded-3xl border border-amber-100 shadow-xl overflow-hidden max-w-3xl mx-auto">
+        <!-- Banner Dourado com Botão Principal do WhatsApp -->
+        <div class="bg-gradient-to-r from-amber-700 via-amber-600 to-amber-700 text-white p-6 sm:p-10 text-center relative">
+          <span class="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/20 backdrop-blur-md mb-3 sm:mb-4 shadow-inner">
+            <svg class="w-7 h-7 sm:w-8 sm:h-8 fill-white" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+          </span>
+          <h3 class="font-serif font-bold text-xl sm:text-3xl text-white mb-2">
+            Confirmar Presença no WhatsApp
+          </h3>
+          <p class="text-amber-100 text-xs sm:text-sm max-w-lg mx-auto mb-6">
+            Basta clicar no botão abaixo para abrir diretamente o WhatsApp dos homenageados e enviar a confirmação da sua presença.
+          </p>
+
+          <button onclick="weddingApp.openWhatsAppRsvp()" class="w-full sm:w-auto px-5 sm:px-8 py-3.5 sm:py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-base tracking-wide shadow-2xl transition transform hover:scale-105 inline-flex items-center justify-center gap-2.5 sm:gap-3 border-2 border-emerald-400/40">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6 fill-current shrink-0" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+            <span>Confirmar Presença pelo WhatsApp</span>
+          </button>
+          <div class="mt-4 text-xs text-amber-200/90 font-mono">
+            WhatsApp cadastrado: <span id="rsvp-display-phone" class="font-bold underline text-white">Carregando...</span>
+          </div>
+        </div>
+
+        <!-- Formulário Opcional com Detalhes (Nome e Quantidade de Pessoas) -->
+        <div class="p-5 sm:p-8 md:p-10 bg-white">
+          <div class="text-center mb-6">
+            <h4 class="font-serif font-bold text-stone-800 text-lg sm:text-xl">Deseja detalhar o número de convidados?</h4>
+            <p class="text-stone-500 text-xs sm:text-sm">Preencha abaixo para gerar a mensagem personalizada direto no seu WhatsApp:</p>
+          </div>
+
+          <form onsubmit="weddingApp.submitRsvpForm(); return false;" class="space-y-4 max-w-lg mx-auto">
+            <div>
+              <label for="rsvp-guest-name" class="block text-xs font-semibold text-stone-700 uppercase tracking-wider mb-1.5">Seu Nome / Nome da Família</label>
+              <input type="text" id="rsvp-guest-name" required placeholder="Ex: Família Silva / Carlos e Maria" class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:outline-none focus:border-amber-500 text-sm">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="rsvp-guest-count" class="block text-xs font-semibold text-stone-700 uppercase tracking-wider mb-1.5">Total de Pessoas</label>
+                <select id="rsvp-guest-count" class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:outline-none focus:border-amber-500 text-sm bg-white">
+                  <option value="1 pessoa (apenas eu)">1 pessoa (apenas eu)</option>
+                  <option value="2 pessoas (eu + 1)" selected>2 pessoas (eu + 1)</option>
+                  <option value="3 pessoas">3 pessoas</option>
+                  <option value="4 pessoas">4 pessoas</option>
+                  <option value="5 pessoas ou mais">5 pessoas ou mais</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="rsvp-guest-note" class="block text-xs font-semibold text-stone-700 uppercase tracking-wider mb-1.5">Mensagem / Observação</label>
+                <input type="text" id="rsvp-guest-note" placeholder="Ex: Estaremos presentes com muita alegria!" class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:outline-none focus:border-amber-500 text-sm">
+              </div>
+            </div>
+
+            <button type="submit" class="w-full py-4 rounded-xl btn-primary-wedding font-semibold text-sm tracking-wider uppercase flex items-center justify-center gap-2 shadow-md">
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+              <span>Enviar Confirmação pelo WhatsApp</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =========================================================================
+       4. LOCAL DAS BODAS DE OURO (MAPA & LOCALIZAÇÃO)
+       ========================================================================= -->
+  <section id="sec-venue" class="py-20 md:py-28 bg-stone-50/70 border-t border-b border-amber-100/60 relative">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-14">
+        <div class="wedding-badge mb-3">📍 Onde Celebraremos</div>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-stone-800 mb-3">Local das Bodas de Ouro</h2>
+        <div class="gold-divider mx-auto">
+          <span class="text-amber-600 text-lg">❦</span>
+        </div>
+        <p class="text-stone-600 max-w-xl mx-auto text-sm md:text-base">
+          Um espaço nobre e acolhedor para reunir nossa família e amigos de uma vida inteira.
+        </p>
+      </div>
+
+      <div class="bg-white rounded-3xl border border-amber-100 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12">
+        <!-- Painel de Informações -->
+        <div class="lg:col-span-5 p-6 sm:p-8 md:p-12 flex flex-col justify-between bg-stone-50/50">
+          <div>
+            <span class="text-xs uppercase tracking-widest text-amber-700 font-bold mb-2 block">Nosso Ponto de Encontro</span>
+            <h3 id="venue-card-name" class="font-serif text-2xl md:text-3xl font-bold text-stone-800 mb-4">Chácara Sagrado Coração de Jesus</h3>
+            <p id="venue-card-address" class="text-stone-600 text-sm md:text-base mb-6 leading-relaxed">
+              Chácara Sagrado Coração de Jesus, Brasília - DF
+            </p>
+
+            <div class="space-y-3 pt-4 border-t border-stone-200">
+              <div class="flex items-center gap-3 text-sm text-stone-700">
+                <span class="text-amber-600">📅</span>
+                <span id="venue-card-date" class="font-medium">19 de Dezembro de 2026</span>
+              </div>
+              <div class="flex items-center gap-3 text-sm text-stone-700">
+                <span class="text-amber-600">🕐</span>
+                <span id="venue-card-time" class="font-medium">17:00h</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-8 flex flex-col gap-3">
+            <a id="btn-venue-directions" href="#" target="_blank" class="btn-primary-wedding py-3.5 px-6 rounded-xl font-semibold text-sm text-center flex items-center justify-center gap-2">
+              <span>📍</span> Abrir no Google Maps / Waze
+            </a>
+          </div>
+        </div>
+
+        <!-- Mapa Ilustrativo / Interativo Elegante -->
+        <div class="lg:col-span-7 h-72 sm:h-80 lg:h-auto min-h-[300px] sm:min-h-[360px] relative bg-stone-200 overflow-hidden">
+          <iframe 
+            src="https://maps.google.com/maps?q=Chacara+Sagrado+Coracao+de+Jesus+Brasilia&t=&z=14&ie=UTF8&iwloc=&output=embed" 
+            class="w-full h-full border-0 grayscale hover:grayscale-0 transition-all duration-700" 
+            allowfullscreen="" 
+            loading="lazy">
+          </iframe>
+          <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-md px-4 py-2 rounded-xl text-xs font-semibold text-stone-800 shadow-md border border-amber-100 flex items-center gap-2">
+            <span>✨</span> Chácara Sagrado Coração de Jesus
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       12. MÚSICA DO CASAL (PLAYER FLUTUANTE REFINADO)
+       ========================================================================= -->
+  <div id="sec-music-widget" class="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-30">
+    <audio id="wedding-bg-audio" preload="auto" loop src="assets/audio/como-e-grande-o-meu-amor-por-voce.mp3"></audio>
+    <div id="music-player-widget" class="music-player-widget rounded-full px-3 sm:px-4 py-2 sm:py-2.5 flex items-center gap-2.5 sm:gap-3.5 shadow-2xl cursor-pointer select-none">
+      <!-- Equalizador Animado -->
+      <div id="music-eq-bars" class="flex items-end gap-1 h-5 paused">
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+      </div>
+
+      <div class="text-left pr-1 hidden sm:block">
+        <span class="text-[10px] uppercase tracking-widest text-amber-700 font-bold block">🎵 Nossa música</span>
+        <span id="music-track-title" class="text-xs font-serif font-medium text-stone-800 line-clamp-1 max-w-[150px]">Como É Grande O Meu Amor</span>
+      </div>
+
+      <!-- Botão Play / Pause -->
+      <button id="music-play-pause-btn" class="w-9 h-9 rounded-full bg-amber-700 hover:bg-amber-800 text-white flex items-center justify-center transition shadow" title="Tocar / Pausar Música">
+        <svg id="music-play-icon" class="w-4 h-4 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+        <svg id="music-pause-icon" class="w-4 h-4 hidden" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       13. MENSAGEM FINAL (RODAPÉ EMOCIONANTE)
+       ========================================================================= -->
+  <section id="sec-final-message" class="py-24 md:py-32 relative text-center bg-stone-900 text-white overflow-hidden">
+    <!-- Imagem de Fundo Suave -->
+    <div class="absolute inset-0 opacity-20">
+      <img src="assets/images/hero-elderly-hands-table.jpg" alt="José e Cida" class="w-full h-full object-cover">
+    </div>
+
+    <div class="relative z-10 max-w-3xl mx-auto px-4">
+      <div class="text-4xl text-amber-300 font-script mb-4">Com todo o nosso amor e gratidão</div>
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-stone-100 mb-6 leading-snug">
+        "Obrigado por celebrar esses 50 anos de história ao nosso lado."
+      </h2>
+      <p class="font-serif italic text-stone-300 text-base sm:text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-10">
+        "Nossas Bodas de Ouro são ainda mais especiais porque temos pessoas tão queridas e amadas ao nosso redor."
+      </p>
+
+      <div class="gold-divider mx-auto my-6">
+        <span class="text-amber-400 text-2xl">💛</span>
+      </div>
+
+      <div id="final-couple-names" class="font-script text-5xl sm:text-6xl text-amber-200 drop-shadow mb-8">
+        José & Cida
+      </div>
+
+      <div class="pt-8 border-t border-white/10 text-xs text-stone-400 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <span>© 2026 José & Cida. Celebrando 50 Anos de Amor Eterno.</span>
+        <button class="btn-open-admin text-stone-400 hover:text-amber-300 flex items-center gap-1.5 transition">
+          <span>🔒</span> Painel Administrativo da Família
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       MODAIS
+       ========================================================================= -->
+
+  <!-- MODAL: LIGHTBOX EM TELA CHEIA -->
+  <div id="lightbox-modal" class="lightbox-modal fixed inset-0 z-50 hidden flex flex-col justify-between p-3 sm:p-6 md:p-8">
+    <div class="flex items-center justify-between text-white z-20">
+      <div class="text-left pr-4">
+        <h4 id="lightbox-title" class="font-serif text-base sm:text-lg md:text-xl font-bold line-clamp-1"></h4>
+        <p id="lightbox-caption" class="text-xs text-stone-300 line-clamp-1"></p>
+      </div>
+      <button id="lightbox-close" class="p-2 text-white/80 hover:text-white text-3xl font-light focus:outline-none shrink-0" aria-label="Fechar">&times;</button>
+    </div>
+
+    <div class="relative flex-1 flex items-center justify-center my-2 sm:my-4 overflow-hidden">
+      <button id="lightbox-prev" class="absolute left-1 sm:left-3 md:left-6 p-2.5 sm:p-3 rounded-full bg-black/40 hover:bg-black/60 text-white backdrop-blur z-20" aria-label="Foto Anterior">
+        &#10094;
+      </button>
+
+      <img id="lightbox-img" src="" alt="Ampliação" class="max-h-[75vh] sm:max-h-[82vh] max-w-[94vw] sm:max-w-[90vw] object-contain rounded-lg shadow-2xl transition-all duration-300">
+
+      <button id="lightbox-next" class="absolute right-1 sm:right-3 md:right-6 p-2.5 sm:p-3 rounded-full bg-black/40 hover:bg-black/60 text-white backdrop-blur z-20" aria-label="Próxima Foto">
+        &#10095;
+      </button>
+    </div>
+  </div>
+
+
+
+
+  <!-- =========================================================================
+       PAINEL ADMINISTRATIVO DOS NOIVOS (MODAL & DASHBOARD)
+       ========================================================================= -->
+
+  <!-- MODAL DE LOGIN ADMIN -->
+  <div id="admin-login-modal" class="fixed inset-0 z-50 hidden bg-stone-950/75 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-8 shadow-2xl border border-amber-200 text-center relative">
+      <button class="btn-close-admin absolute top-5 right-5 text-stone-400 hover:text-stone-600 text-2xl font-light">&times;</button>
+      <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl text-amber-700">
+        👑
+      </div>
+      <h3 class="font-serif text-2xl font-bold text-stone-800 mb-1">Área da Família</h3>
+      <p class="text-stone-500 text-xs mb-6">Digite a senha de acesso para consultar a lista de presenças confirmadas e gerenciar o site das Bodas de Ouro.</p>
+
+      <form id="admin-login-form" class="space-y-4">
+        <div>
+          <input type="password" id="admin-pin-input" required placeholder="Digite a senha (padrão: Aline@01)" class="w-full px-4 py-3 rounded-xl border border-stone-300 focus:outline-none focus:border-amber-600 text-center text-sm tracking-widest font-mono">
+        </div>
+        <p id="admin-login-error" class="text-xs text-rose-600 hidden"></p>
+        <button type="submit" class="w-full py-3 rounded-xl btn-primary-wedding font-semibold text-sm">
+          Acessar Painel
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL DO DASHBOARD ADMINISTRATIVO COMPLETO -->
+  <div id="admin-dashboard-modal" class="fixed inset-0 z-50 hidden bg-stone-900/80 backdrop-blur-md flex items-center justify-center p-2 sm:p-6">
+    <div class="bg-white rounded-2xl sm:rounded-3xl max-w-5xl w-full h-[96vh] sm:h-[92vh] flex flex-col shadow-2xl border border-amber-200 overflow-hidden">
+      <!-- Topo do Painel -->
+      <div class="px-4 py-3 sm:px-6 sm:py-4 border-b border-stone-200 bg-stone-50 flex items-center justify-between">
+        <div class="flex items-center gap-2 sm:gap-3">
+          <span class="text-xl sm:text-2xl">👑</span>
+          <div>
+            <h3 class="font-serif text-base sm:text-xl font-bold text-stone-800">Área da Família • Bodas de Ouro</h3>
+            <p class="text-[10px] sm:text-xs text-stone-500">Controle de presenças e gerenciamento do site de José e Cida</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="admin-btn-logout" class="px-2.5 sm:px-3 py-1.5 rounded-lg border border-stone-300 text-stone-600 hover:bg-stone-100 text-xs font-semibold">
+            Sair
+          </button>
+          <button class="btn-close-admin p-1 text-stone-400 hover:text-stone-700 text-2xl font-light">&times;</button>
+        </div>
+      </div>
+
+      <!-- Barra de Abas -->
+      <div class="flex border-b border-stone-200 bg-white px-3 sm:px-6 overflow-x-auto text-xs whitespace-nowrap gap-1">
+        <button data-tab="attended" class="admin-tab-btn py-3 px-3.5 border-b-2 border-amber-800 font-semibold text-amber-900 bg-amber-100 rounded-t-lg">
+          👥 Presenças Confirmadas
+        </button>
+        <button data-tab="photos" class="admin-tab-btn py-3 px-3.5 border-b-2 border-transparent font-medium text-stone-600 hover:text-amber-800 rounded-t-lg">
+          📷 Fotos das Bodas
+        </button>
+        <button data-tab="settings" class="admin-tab-btn py-3 px-3.5 border-b-2 border-transparent font-medium text-stone-600 hover:text-amber-800 rounded-t-lg">
+          ⚙️ Dados do Casal & Local
+        </button>
+        <button data-tab="sections" class="admin-tab-btn py-3 px-3.5 border-b-2 border-transparent font-medium text-stone-600 hover:text-amber-800 rounded-t-lg">
+          🎨 Cores & Seções
+        </button>
+        <button data-tab="metrics" class="admin-tab-btn py-3 px-3.5 border-b-2 border-transparent font-medium text-stone-600 hover:text-amber-800 rounded-t-lg">
+          📊 Métricas Gerais
+        </button>
+      </div>
+
+      <!-- Corpo com Rolagem -->
+      <div class="flex-1 overflow-y-auto p-4 sm:p-6 bg-stone-50/50">
+
+        <!-- ABA 1: PRESENÇAS CONFIRMADAS (CONSULTA DE QUEM CONFIRMOU EM TAL DIA) -->
+        <div id="tab-panel-attended" class="admin-tab-panel space-y-6">
+          <!-- Cabeçalho com Resumo e Ações Rápidas -->
+          <div class="bg-white p-5 sm:p-6 rounded-2xl border border-stone-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 font-semibold text-xs mb-2">
+                <span>✅</span> Controle de Convidados
+              </div>
+              <h3 class="font-serif font-bold text-xl sm:text-2xl text-stone-800">
+                Lista de Presenças Confirmadas
+              </h3>
+              <p class="text-xs sm:text-sm text-stone-500 mt-1">
+                Acompanhe quem confirmou presença, quantas pessoas virão e a data/horário exato de cada confirmação.
+              </p>
+            </div>
+
+            <!-- Botões de Ação: Exportar / Copiar / Imprimir -->
+            <div class="flex flex-wrap items-center gap-2 shrink-0">
+              <button onclick="adminPanel.copyAttendedList()" class="px-3.5 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-900 text-xs font-semibold flex items-center gap-1.5 transition shadow-sm">
+                <span>📋</span> Copiar Lista
+              </button>
+              <button onclick="adminPanel.printAttendedList()" class="px-3.5 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 border border-stone-300 text-stone-800 text-xs font-semibold flex items-center gap-1.5 transition shadow-sm">
+                <span>🖨️</span> Imprimir / PDF
+              </button>
+            </div>
+          </div>
+
+          <!-- Cards de Métricas de Presença -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-stone-200 shadow-sm flex items-center justify-between">
+              <div>
+                <span class="text-xs text-stone-500 font-semibold uppercase tracking-wider block">Famílias / Grupos</span>
+                <span id="admin-attended-total-groups" class="font-serif text-2xl sm:text-3xl font-bold text-amber-800 mt-1 block">0</span>
+              </div>
+              <span class="text-3xl">💌</span>
+            </div>
+            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-stone-200 shadow-sm flex items-center justify-between">
+              <div>
+                <span class="text-xs text-stone-500 font-semibold uppercase tracking-wider block">Total de Pessoas Estimado</span>
+                <span id="admin-attended-total-people" class="font-serif text-2xl sm:text-3xl font-bold text-emerald-700 mt-1 block">0</span>
+              </div>
+              <span class="text-3xl">👥</span>
+            </div>
+            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-stone-200 shadow-sm flex items-center justify-between">
+              <div>
+                <span class="text-xs text-stone-500 font-semibold uppercase tracking-wider block">Última Confirmação</span>
+                <span id="admin-attended-last-date" class="font-semibold text-xs sm:text-sm text-stone-700 mt-1 block">Nenhuma</span>
+              </div>
+              <span class="text-3xl">📅</span>
+            </div>
+          </div>
+
+          <!-- Formulário para Adicionar Confirmação Manual (WhatsApp / Telefone / Pessoalmente) -->
+          <div class="bg-white p-5 sm:p-6 rounded-2xl border border-amber-200/80 shadow-sm">
+            <div class="flex items-center justify-between mb-3">
+              <h4 class="font-serif font-bold text-stone-800 text-base flex items-center gap-2">
+                <span>➕</span> Registrar Confirmação Manualmente
+              </h4>
+              <span class="text-[11px] text-stone-400">Para quando alguém confirmar por telefone ou pessoalmente</span>
+            </div>
+            <form id="admin-add-attended-form" class="grid grid-cols-1 sm:grid-cols-12 gap-3">
+              <div class="sm:col-span-5">
+                <label class="block text-xs font-semibold text-stone-600 mb-1">Nome do Convidado / Família *</label>
+                <input type="text" id="admin-att-name" required placeholder="Ex: Tio João & Família" class="w-full px-3.5 py-2 rounded-xl border text-sm">
+              </div>
+              <div class="sm:col-span-3">
+                <label class="block text-xs font-semibold text-stone-600 mb-1">Quantidade de Pessoas</label>
+                <select id="admin-att-count" class="w-full px-3.5 py-2 rounded-xl border text-sm bg-white">
+                  <option value="1 pessoa">1 pessoa</option>
+                  <option value="2 pessoas" selected>2 pessoas</option>
+                  <option value="3 pessoas">3 pessoas</option>
+                  <option value="4 pessoas">4 pessoas</option>
+                  <option value="5 pessoas ou mais">5 pessoas ou mais</option>
+                </select>
+              </div>
+              <div class="sm:col-span-4">
+                <label class="block text-xs font-semibold text-stone-600 mb-1">Dia da Confirmação (Data)</label>
+                <input type="text" id="admin-att-date" placeholder="Ex: Hoje ou 28/09/2026" class="w-full px-3.5 py-2 rounded-xl border text-sm">
+              </div>
+              <div class="sm:col-span-9">
+                <label class="block text-xs font-semibold text-stone-600 mb-1">Observação / Recado (opcional)</label>
+                <input type="text" id="admin-att-msg" placeholder="Ex: Confirmou pelo WhatsApp / Trazendo as crianças" class="w-full px-3.5 py-2 rounded-xl border text-sm">
+              </div>
+              <div class="sm:col-span-3 flex items-end">
+                <button type="submit" class="w-full py-2.5 px-4 rounded-xl btn-primary-wedding font-semibold text-xs shadow-md">
+                  Salvar Presença
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Barra de Busca e Lista -->
+          <div class="bg-white p-5 sm:p-6 rounded-2xl border border-stone-200 shadow-sm space-y-4">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div class="relative w-full sm:w-80">
+                <input type="text" id="admin-attended-search" placeholder="🔍 Buscar por nome ou dia..." class="w-full pl-9 pr-4 py-2 rounded-xl border border-stone-200 text-xs focus:outline-none focus:border-amber-500">
+                <span class="absolute left-3 top-2.5 text-stone-400 text-xs">🔍</span>
+              </div>
+              <span id="admin-attended-counter-display" class="text-xs text-stone-500 font-medium">Mostrando todas as presenças</span>
+            </div>
+
+            <!-- Tabela / Cards Injetados Dinamicamente via admin.js -->
+            <div id="admin-attended-list" class="space-y-3">
+              <!-- Injetado dinamicamente -->
+            </div>
+          </div>
+        </div>
+
+        <!-- ABA 5: MÉTRICAS GERAIS -->
+        <div id="tab-panel-metrics" class="admin-tab-panel hidden space-y-6">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm">
+              <span class="text-xs text-stone-500 font-semibold uppercase">Fotos Pendentes</span>
+              <span id="metric-pending-photos" class="block font-serif text-3xl font-bold text-amber-700 mt-2">0</span>
+              <span class="text-[11px] text-stone-400">Aguardando aprovação</span>
+            </div>
+            <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm">
+              <span class="text-xs text-stone-500 font-semibold uppercase">Presenças Marcadas</span>
+              <span id="metric-attended" class="block font-serif text-3xl font-bold text-stone-800 mt-2">0</span>
+              <span class="text-[11px] text-stone-400">Mural "Eu fui!"</span>
+            </div>
+            <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm">
+              <span class="text-xs text-stone-500 font-semibold uppercase">Mensagens de Amor</span>
+              <span id="metric-messages" class="block font-serif text-3xl font-bold text-rose-700 mt-2">0</span>
+              <span class="text-[11px] text-stone-400">Recados recebidos</span>
+            </div>
+          </div>
+
+          <div class="p-6 bg-amber-50/70 rounded-2xl border border-amber-200">
+            <h4 class="font-serif font-bold text-amber-900 text-lg mb-2">Dica para a Família ✨</h4>
+            <p class="text-stone-600 text-sm leading-relaxed">
+              Todas as modificações feitas neste painel são salvas instantaneamente e atualizam o site público em tempo real. Você pode alterar fotos, mudar textos, aprovar fotos enviadas pelos convidados durante a festa e ativar ou ocultar seções quando desejar!
+            </p>
+          </div>
+
+          <div class="pt-4 border-t border-stone-200 flex justify-between items-center">
+            <span class="text-xs text-stone-500">Deseja restaurar os dados de exemplo originais?</span>
+            <button id="admin-btn-reset" class="px-4 py-2 bg-stone-200 hover:bg-stone-300 text-stone-700 rounded-xl text-xs font-semibold transition">
+              Restaurar Dados Padrão
+            </button>
+          </div>
+        </div>
+
+        <!-- ABA 2: DADOS GERAIS -->
+        <div id="tab-panel-settings" class="admin-tab-panel hidden">
+          <form id="admin-settings-form" class="space-y-6 max-w-3xl bg-white p-6 rounded-2xl border border-stone-200">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold text-stone-600 mb-1">Nome do Esposo (José)</label>
+                <input type="text" id="set-groom-name" class="w-full px-3.5 py-2 rounded-xl border text-sm">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-stone-600 mb-1">Nome da Esposa (Cida)</label>
+                <input type="text" id="set-bride-name" class="w-full px-3.5 py-2 rounded-xl border text-sm">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-stone-600 mb-1">Data da Celebração (Formato: AAAA-MM-DDTHH:MM)</label>
+                <input type="text" id="set-wedding-date" placeholder="2026-12-19T17:00:00" class="w-full px-3.5 py-2 rounded-xl border text-sm font-mono">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-stone-600 mb-1">Horário Descritivo</label>
+                <input type="text" id="set-event-time" placeholder="17:00h" class="w-full px-3.5 py-2 rounded-xl border text-sm">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-stone-600 mb-1">Nome do Local</label>
+                <input type="text" id="set-venue-name" class="w-full px-3.5 py-2 rounded-xl border text-sm">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-stone-600 mb-1">Endereço Completo</label>
+                <input type="text" id="set-venue-address" class="w-full px-3.5 py-2 rounded-xl border text-sm">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-stone-600 mb-1">Link do Google Maps</label>
+                <input type="url" id="set-maps-url" class="w-full px-3.5 py-2 rounded-xl border text-sm">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-stone-600 mb-1">Link do Waze</label>
+                <input type="url" id="set-waze-url" class="w-full px-3.5 py-2 rounded-xl border text-sm">
+              </div>
+              <div class="sm:col-span-2">
+                <label class="block text-xs font-semibold text-stone-600 mb-1">Traje Sugerido</label>
+                <input type="text" id="set-dress-code" class="w-full px-3.5 py-2 rounded-xl border text-sm">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-emerald-800 mb-1">WhatsApp para Confirmação de Presença (com DDD)</label>
+                <input type="text" id="set-whatsapp-number" placeholder="Ex: 5561999999999" class="w-full px-3.5 py-2 rounded-xl border border-emerald-300 text-sm font-mono bg-emerald-50/30">
+                <span class="text-[11px] text-stone-400">Ex: 5561999999999 (com DDD). Quando os convidados confirmarem presença, serão direcionados para este WhatsApp.</span>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-stone-600 mb-1">Mensagem Padrão do WhatsApp</label>
+                <input type="text" id="set-whatsapp-msg" placeholder="Ex: Olá! Gostaria de confirmar minha presença..." class="w-full px-3.5 py-2 rounded-xl border text-sm">
+                <span class="text-[11px] text-stone-400">Mensagem inicial que os convidados verão ao abrir a conversa.</span>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-stone-600 mb-1">Título da Música Especial</label>
+                <input type="text" id="set-music-title" class="w-full px-3.5 py-2 rounded-xl border text-sm">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-stone-600 mb-1">URL do Áudio MP3 (Opcional - deixe vazio para melodia acústica embutida)</label>
+                <input type="url" id="set-music-url" placeholder="https://exemplo.com/musica.mp3" class="w-full px-3.5 py-2 rounded-xl border text-sm font-mono">
+              </div>
+              <div class="sm:col-span-2">
+                <label class="block text-xs font-semibold text-stone-600 mb-1">Senha de Acesso ao Painel Administrativo</label>
+                <input type="text" id="set-admin-pin" class="w-full px-3.5 py-2 rounded-xl border text-sm font-mono">
+              </div>
+            </div>
+
+            <button type="submit" class="py-3 px-6 rounded-xl btn-primary-wedding font-semibold text-sm">
+              Salvar Alterações
+            </button>
+          </form>
+        </div>
+
+        <!-- ABA 3: CORES & SEÇÕES -->
+        <div id="tab-panel-sections" class="admin-tab-panel hidden space-y-6">
+          <div class="bg-white p-6 rounded-2xl border border-stone-200">
+            <h4 class="font-serif font-bold text-stone-800 text-lg mb-3">Paleta de Cores do Site</h4>
+            <select id="admin-theme-select" class="w-full max-w-xs px-4 py-2.5 rounded-xl border border-stone-300 text-sm">
+              <option value="theme-gold">Dourado Suave & Champagne (Padrão)</option>
+              <option value="theme-rose">Rosa Chá Romântico & Blush</option>
+              <option value="theme-sage">Verde Sálvia & Eucalipto Botânico</option>
+              <option value="theme-champagne">Champagne Imperial & Nude Quente</option>
+            </select>
+          </div>
+
+          <div class="bg-white p-6 rounded-2xl border border-stone-200">
+            <h4 class="font-serif font-bold text-stone-800 text-lg mb-1">Ativar / Ocultar Seções do Site</h4>
+            <p class="text-xs text-stone-500 mb-4">Ligue ou desligue as seções conforme a fase da comemoração:</p>
+
+            <div id="admin-section-toggles" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              <!-- Toggles injetados via admin.js -->
+            </div>
+          </div>
+        </div>
+
+        <!-- ABA 4: GERENCIAR FOTOS DAS BODAS -->
+        <div id="tab-panel-photos" class="admin-tab-panel hidden space-y-6">
+          <div class="bg-white p-6 rounded-2xl border border-stone-200">
+            <h4 class="font-serif font-bold text-stone-800 text-lg mb-1">Adicionar Nova Foto ao Álbum</h4>
+            <p class="text-xs text-stone-500 mb-4">Insira fotos para o álbum comemorativo das Bodas de Ouro de José & Cida:</p>
+            <form id="admin-add-photo-form" class="space-y-4 max-w-2xl">
+              <input type="hidden" id="admin-photo-target" value="wedding">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div class="sm:col-span-2">
+                  <label class="block text-xs font-semibold text-stone-600 mb-1">Título da Foto</label>
+                  <input type="text" id="admin-photo-title" placeholder="Ex: O Brinde dos 50 Anos com a Família" class="w-full px-3.5 py-2.5 rounded-xl border text-sm">
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-stone-600 mb-1">Categoria</label>
+                  <select id="admin-photo-category" class="w-full px-3.5 py-2.5 rounded-xl border text-sm">
+                    <option value="cerimonia">Cerimônia</option>
+                    <option value="noivos" selected>José & Cida (O Casal)</option>
+                    <option value="familia">Família & Filhos</option>
+                    <option value="festa">Festa / Recepção</option>
+                    <option value="especiais">Momentos Especiais</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-stone-600 mb-1">Legenda Curta (opcional)</label>
+                  <input type="text" id="admin-photo-caption" placeholder="Ex: Cinco décadas de amor celebradas com quem mais amamos..." class="w-full px-3.5 py-2.5 rounded-xl border text-sm">
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="block text-xs font-semibold text-stone-600 mb-1">Link / URL da Imagem (ou caminho do arquivo)</label>
+                  <input type="text" id="admin-photo-url" required placeholder="https://exemplo.com/foto.jpg ou assets/images/foto.jpg" class="w-full px-3.5 py-2.5 rounded-xl border text-sm font-mono">
+                  <span class="text-[11px] text-stone-400">Você pode colar links diretos da web ou caminhos de fotos salvas na pasta do site (ex: assets/images/suafoto.jpg).</span>
+                </div>
+              </div>
+              <button type="submit" class="py-2.5 px-6 rounded-xl btn-primary-wedding font-semibold text-xs shadow-md">
+                Adicionar à Galeria
+              </button>
+            </form>
+          </div>
+
+          <div id="admin-photos-list" class="space-y-4">
+            <!-- Lista com botão excluir -->
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTÃO FLUTUANTE DO WHATSAPP (CONFIRMAR PRESENÇA) -->
+  <button id="floating-whatsapp-btn" onclick="weddingApp.openWhatsAppRsvp()" class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 bg-emerald-600 hover:bg-emerald-500 text-white p-3 sm:px-5 sm:py-3.5 rounded-full shadow-2xl flex items-center gap-2 sm:gap-2.5 transition-all transform hover:scale-105 border-2 border-white/30 group animate-pulse" title="Confirmar Presença pelo WhatsApp">
+    <svg class="w-5 h-5 sm:w-6 sm:h-6 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+    <span class="hidden sm:inline text-xs font-bold uppercase tracking-wider">Confirmar Presença</span>
+  </button>
+
+  <!-- =========================================================================
+       BANNER CENTRALIZADO DE CONFIRMAÇÃO DE PRESENÇA (TEMA BODAS DE OURO)
+       ========================================================================= -->
+  <div id="rsvp-reminder-banner" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/65 backdrop-blur-sm transition-all duration-500 opacity-0 pointer-events-none select-none">
+    
+    <!-- Card Centralizado Nobre e Ampliado -->
+    <div id="rsvp-banner-card" class="banner-glass-card relative overflow-hidden rounded-3xl w-full max-w-lg sm:max-w-xl md:max-w-2xl bg-white shadow-2xl border-2 border-amber-300/90 ring-4 ring-amber-400/20 max-h-[92vh] flex flex-col">
+      
+      <!-- Cabeçalho com Imagem Dourada das Alianças em Destaque -->
+      <div class="relative h-40 sm:h-52 md:h-60 w-full overflow-hidden shrink-0 bg-amber-100">
+        <img src="assets/images/rsvp-banner-golden-rings.jpg" alt="Bodas de Ouro" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent"></div>
+        
+        <!-- Selo de Bodas de Ouro com Monograma -->
+        <div class="absolute bottom-3 left-4 sm:bottom-4 sm:left-6 flex items-center gap-3">
+          <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-amber-500 text-white text-xs sm:text-sm font-bold tracking-wider uppercase backdrop-blur-sm shadow-md">
+            <span>✨</span> 50 Anos de Amor
+          </span>
+          <span id="banner-couple-names" class="text-amber-100 font-script text-2xl sm:text-3xl md:text-4xl drop-shadow">
+            José & Cida
+          </span>
+        </div>
+
+        <!-- Botão Fechar no Canto Superior (✕) -->
+        <button id="btn-close-rsvp-banner" class="absolute top-3 right-3 sm:top-4 sm:right-4 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center transition backdrop-blur-sm shadow-lg transform hover:scale-105" title="Fechar lembrete">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Conteúdo do Banner -->
+      <div class="p-5 sm:p-7 md:p-8 flex-1 overflow-y-auto">
+        <div class="text-center sm:text-left mb-4">
+          <span class="text-xs uppercase tracking-widest text-amber-700 font-bold block mb-1">Confirmação Importante</span>
+          <h3 class="font-serif font-bold text-stone-800 text-xl sm:text-2xl md:text-3xl leading-snug">
+            Não esqueça de confirmar sua presença! 💍
+          </h3>
+        </div>
+
+        <p class="text-stone-600 text-sm sm:text-base leading-relaxed mb-5 text-center sm:text-left">
+          Celebrar 50 anos de união, fé e família é um marco inesquecível para o <strong class="text-stone-800">Seu José</strong> e a <strong class="text-stone-800">Dona Cida</strong>. A sua presença é o maior presente! Por favor, confirme com antecedência para que possamos organizar tudo com muito carinho.
+        </p>
+
+        <!-- Pílula Informativa de Data e Local -->
+        <div class="bg-amber-50/80 border border-amber-200/80 rounded-2xl p-3.5 sm:p-4 mb-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs sm:text-sm text-stone-700">
+          <div class="flex items-center gap-2">
+            <span class="text-base sm:text-lg">📅</span>
+            <span class="font-semibold">19 de Dezembro de 2026 • 17:00h</span>
+          </div>
+          <div class="flex items-center gap-2 text-stone-500">
+            <span>📍</span>
+            <span>Chácara Sagrado Coração de Jesus</span>
+          </div>
+        </div>
+
+        <!-- Botões de Ação de Grande Impacto -->
+        <div class="flex flex-col sm:flex-row items-center gap-3">
+          <button id="btn-dismiss-rsvp-banner" class="w-full sm:w-auto px-5 py-3.5 rounded-2xl border border-stone-300 hover:bg-stone-100 text-stone-600 text-xs sm:text-sm font-semibold text-center transition order-2 sm:order-1">
+            Lembrar mais tarde
+          </button>
+          <button id="btn-confirm-rsvp-banner" class="w-full sm:flex-1 py-3.5 sm:py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 via-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white text-sm sm:text-base font-bold shadow-xl hover:shadow-2xl transition transform hover:scale-[1.02] flex items-center justify-center gap-2.5 order-1 sm:order-2">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6 fill-current shrink-0" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+            <span>Confirmar Presença no WhatsApp</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scripts da Aplicação em Ordem de Dependência -->
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/store.js"></script>
+  <script src="assets/js/particles.js"></script>
+  <script src="assets/js/audio.js"></script>
+  <script src="assets/js/admin.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
