@@ -379,8 +379,8 @@ class WeddingApp {
   // ==========================================
   openWhatsAppRsvp(customMessage) {
     const s = WeddingStore.getSettings();
-    let rawPhone = (s.whatsappNumber || "5561999999999").replace(/\D/g, "");
-    if (!rawPhone) rawPhone = "5561999999999";
+    let rawPhone = (s.whatsappNumber || "5514996712219").replace(/\D/g, "");
+    if (!rawPhone) rawPhone = "5514996712219";
     // Adiciona DDI 55 do Brasil se tiver 10 ou 11 dígitos
     if (rawPhone.length === 10 || rawPhone.length === 11) {
       rawPhone = "55" + rawPhone;

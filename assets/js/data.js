@@ -24,7 +24,7 @@ const DEFAULT_WEDDING_DATA = {
     pixRecipient: "José Ferreira e Maria Aparecida (Cida)",
     musicTitle: "Como É Grande O Meu Amor Por Você",
     musicUrl: "assets/audio/como-e-grande-o-meu-amor-por-voce.mp3",
-    whatsappNumber: "5561999999999", // WhatsApp cadastrado para confirmação de presença (com DDD)
+    whatsappNumber: "5514996712219", // WhatsApp cadastrado para confirmação de presença (com DDD)
     whatsappMessage: "Olá! Gostaria de confirmar minha presença na celebração das Bodas de Ouro de José & Cida (19/12/2026)! 🥂💛",
     activeTheme: "theme-gold", // theme-gold, theme-rose, theme-sage, theme-champagne
     adminPin: "Aline@01",

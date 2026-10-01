@@ -35,6 +35,11 @@ class WeddingStoreClass {
           savedSettings.venueMapQuery = DEFAULT_WEDDING_DATA.settings.venueMapQuery;
         }
 
+        // Atualiza WhatsApp para o número principal (14) 99671-2219 caso ainda conste o número antigo
+        if (!savedSettings.whatsappNumber || savedSettings.whatsappNumber.includes("5561") || savedSettings.whatsappNumber.includes("999999999")) {
+          savedSettings.whatsappNumber = DEFAULT_WEDDING_DATA.settings.whatsappNumber;
+        }
+
         // Garante que seções removidas permaneçam desativadas
         const visibility = { ...DEFAULT_WEDDING_DATA.settings.sectionsVisibility, ...(savedSettings.sectionsVisibility || {}) };
         visibility.story = false;
