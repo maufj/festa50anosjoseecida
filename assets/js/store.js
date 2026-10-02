@@ -50,13 +50,35 @@ class WeddingStoreClass {
         visibility.gifts = true;
         savedSettings.sectionsVisibility = visibility;
 
+        // Remove convidados de demonstração antigos para controle 100% real
+        const loadedAttended = (parsed.attendedGuests || DEFAULT_WEDDING_DATA.attendedGuests || [])
+          .filter(g => !["att-1", "att-2", "att-3"].includes(g.id))
+          .map(g => {
+            let companions = Array.isArray(g.companions) ? g.companions : [];
+            let cleanName = (g.name || "").trim();
+            if (companions.length === 0 && cleanName.includes("(+")) {
+              const match = cleanName.match(/\(\+\s*(.*?)\)/);
+              if (match && match[1]) {
+                companions = match[1].split(",").map(c => c.trim()).filter(Boolean);
+              }
+            }
+            if (cleanName.includes("(+")) {
+              cleanName = cleanName.replace(/\s*\(\+.*?\)\s*$/, "").trim();
+            }
+            return {
+              ...g,
+              name: cleanName || g.name,
+              companions: companions
+            };
+          });
+
         return {
           settings: { ...DEFAULT_WEDDING_DATA.settings, ...savedSettings },
           storyMilestones: parsed.storyMilestones || DEFAULT_WEDDING_DATA.storyMilestones,
           momentsGallery: parsed.momentsGallery || DEFAULT_WEDDING_DATA.momentsGallery,
           weddingGallery: parsed.weddingGallery || DEFAULT_WEDDING_DATA.weddingGallery,
           guestPhotos: parsed.guestPhotos || DEFAULT_WEDDING_DATA.guestPhotos,
-          attendedGuests: parsed.attendedGuests || DEFAULT_WEDDING_DATA.attendedGuests,
+          attendedGuests: loadedAttended,
           messages: parsed.messages || DEFAULT_WEDDING_DATA.messages,
           giftRegistry: parsed.giftRegistry || DEFAULT_WEDDING_DATA.giftRegistry
         };
@@ -226,15 +248,33 @@ class WeddingStoreClass {
     return this.state.attendedGuests;
   }
 
-  addAttendedGuest({ name, photo, message, count, date }) {
+  addAttendedGuest({ name, photo, message, count, date, companions }) {
     const now = new Date();
     const dateFormatted = `${now.toLocaleDateString("pt-BR")} às ${now.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}`;
+
+    let cleanCompanions = Array.isArray(companions)
+      ? companions.map(c => typeof c === "string" ? c.trim() : "").filter(Boolean)
+      : [];
+
+    let cleanName = (name || "Convidado").trim();
+    if (cleanName.includes("(+")) {
+      const match = cleanName.match(/\(\+\s*(.*?)\)/);
+      if (match && match[1] && cleanCompanions.length === 0) {
+        cleanCompanions = match[1].split(",").map(c => c.trim()).filter(Boolean);
+      }
+      cleanName = cleanName.replace(/\s*\(\+.*?\)\s*$/, "").trim();
+    }
+
+    const calculatedTotal = 1 + cleanCompanions.length;
+    const finalCount = count || (cleanCompanions.length > 0 ? `${calculatedTotal} pessoas` : "1 pessoa");
+
     const newGuest = {
       id: "att-" + Date.now(),
-      name: (name || "Amigo Querido").trim(),
-      count: count || "1 pessoa",
-      photo: photo || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
-      message: message ? message.trim() : "Presença confirmada nas Bodas de Ouro! 💛",
+      name: cleanName || "Convidado",
+      count: finalCount,
+      companions: cleanCompanions,
+      photo: photo || "",
+      message: message ? message.trim() : `Presença confirmada (${finalCount})`,
       date: date || dateFormatted,
       timestamp: Date.now()
     };

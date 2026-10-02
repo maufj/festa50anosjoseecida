@@ -215,33 +215,8 @@ const DEFAULT_WEDDING_DATA = {
     }
   ],
 
-  // Mural: "Eu fui às Bodas de Ouro! 🥂"
-  attendedGuests: [
-    {
-      id: "att-1",
-      name: "Família Silva (Filhos e Netos)",
-      count: "5 pessoas",
-      photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80",
-      message: "Estaremos todos presentes para celebrar esses 50 anos abençoados com vocês!",
-      date: "28/09/2026 às 15:30"
-    },
-    {
-      id: "att-2",
-      name: "Compadre Antônio & Comadre Teresa",
-      count: "2 pessoas",
-      photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80",
-      message: "Com muita alegria e honra vamos brindar ao Jubileu de Ouro!",
-      date: "29/09/2026 às 11:20"
-    },
-    {
-      id: "att-3",
-      name: "Padre Marcelo & Ministros",
-      count: "3 pessoas",
-      photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&q=80",
-      message: "Que Deus continue derramando Sua graça e paz sobre a vida desse casal tão exemplar.",
-      date: "30/09/2026 às 09:45"
-    }
-  ],
+  // Lista de Presenças Confirmadas (inicia vazia para controle real das confirmações)
+  attendedGuests: [],
 
   // Mural de Mensagens de Carinho aos Homenageados
   messages: [

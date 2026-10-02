@@ -8,11 +8,13 @@ class WeddingAdminPanel {
     window.adminPanel = this;
     this.isAuthenticated = sessionStorage.getItem("WEDDING_ADMIN_AUTH") === "true";
     this.currentTab = "attended";
+    this.viewMode = "groups"; // "groups" ou "all_names"
     this.init();
   }
 
   init() {
     this.bindEvents();
+    this.updateAdminCompanionInputs();
   }
 
   bindEvents() {
@@ -92,6 +94,12 @@ class WeddingAdminPanel {
       });
     }
 
+    // Atualização dinâmica dos campos de convidados adicionados (acompanhantes)
+    const countSelect = document.getElementById("admin-att-count");
+    if (countSelect) {
+      countSelect.addEventListener("change", () => this.updateAdminCompanionInputs());
+    }
+
     // Form Adicionar Presença Manual
     const addAttendedForm = document.getElementById("admin-add-attended-form");
     if (addAttendedForm) {
@@ -103,9 +111,16 @@ class WeddingAdminPanel {
         const msg = document.getElementById("admin-att-msg").value.trim();
 
         if (!name) {
-          alert("Por favor, digite o nome do convidado.");
+          alert("Por favor, digite o nome do titular / responsável.");
           return;
         }
+
+        const compInputs = document.querySelectorAll(".admin-companion-input");
+        const companions = [];
+        compInputs.forEach(input => {
+          const val = input.value.trim();
+          if (val) companions.push(val);
+        });
 
         const now = new Date();
         const dateStr = customDate || `${now.toLocaleDateString("pt-BR")} às ${now.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}`;
@@ -113,18 +128,55 @@ class WeddingAdminPanel {
         WeddingStore.addAttendedGuest({
           name,
           count,
+          companions,
           date: dateStr,
           message: msg || `Presença confirmada (${count})`
         });
 
         addAttendedForm.reset();
+        this.updateAdminCompanionInputs();
         this.renderAttendedModeration();
         this.renderMetrics();
         showToast("Convidado confirmado adicionado à lista com sucesso! ✅");
       });
     }
 
-    // Busca rápida de presenças por nome ou dia
+    // Alternadores de visualização: Por Confirmações vs Lista de Todos os Nomes
+    const btnViewGroups = document.getElementById("btn-admin-view-groups");
+    const btnViewAll = document.getElementById("btn-admin-view-all");
+    if (btnViewGroups) {
+      btnViewGroups.addEventListener("click", () => {
+        this.viewMode = "groups";
+        this.updateViewModeButtons();
+        const searchVal = document.getElementById("admin-attended-search")?.value.trim() || "";
+        this.renderAttendedModeration(searchVal);
+      });
+    }
+    if (btnViewAll) {
+      btnViewAll.addEventListener("click", () => {
+        this.viewMode = "all_names";
+        this.updateViewModeButtons();
+        const searchVal = document.getElementById("admin-attended-search")?.value.trim() || "";
+        this.renderAttendedModeration(searchVal);
+      });
+    }
+
+    // Toggle para exibir/ocultar as outras configurações do site
+    const toggleOtherTabsBtn = document.getElementById("btn-toggle-admin-other-tabs");
+    if (toggleOtherTabsBtn) {
+      toggleOtherTabsBtn.addEventListener("click", () => {
+        const tabsBar = document.getElementById("admin-tabs-bar");
+        if (tabsBar) {
+          tabsBar.classList.toggle("hidden");
+          const isHidden = tabsBar.classList.contains("hidden");
+          toggleOtherTabsBtn.textContent = isHidden
+            ? "⚙️ Exibir outras configurações do site (Fotos, Cores e Dados)"
+            : "✖️ Ocultar outras abas e focar nas presenças confirmadas";
+        }
+      });
+    }
+
+    // Busca rápida de presenças por nome (titular ou convidado adicionado) ou dia
     const searchAttInput = document.getElementById("admin-attended-search");
     if (searchAttInput) {
       searchAttInput.addEventListener("input", (e) => {
@@ -454,149 +506,346 @@ class WeddingAdminPanel {
     }
   }
 
+  updateAdminCompanionInputs() {
+    const countSelect = document.getElementById("admin-att-count");
+    const container = document.getElementById("admin-att-companions-container");
+    const inputsBox = document.getElementById("admin-att-companions-inputs");
+    if (!countSelect || !container || !inputsBox) return;
+
+    const val = countSelect.value;
+    const match = val.match(/\d+/);
+    const numPeople = match ? parseInt(match[0], 10) : 1;
+
+    if (numPeople <= 1) {
+      container.classList.add("hidden");
+      inputsBox.innerHTML = "";
+      return;
+    }
+
+    container.classList.remove("hidden");
+    const prevInputs = Array.from(inputsBox.querySelectorAll(".admin-companion-input"));
+    const prevValues = prevInputs.map(i => i.value);
+
+    let html = "";
+    for (let i = 2; i <= numPeople; i++) {
+      const prevVal = prevValues[i - 2] || "";
+      const label = (i === 5 && val.includes("mais"))
+        ? `Nome do 5º Convidado (e demais)`
+        : `Nome do ${i}º Convidado / Acompanhante`;
+      const placeholder = i === 2 ? "Ex: Maria Silva (Esposa)" : i === 3 ? "Ex: Lucas Silva (Filho)" : "Nome do acompanhante";
+
+      html += `
+        <div>
+          <label class="block text-[11px] font-semibold text-amber-900 uppercase tracking-wider mb-1">${label}</label>
+          <input type="text" class="admin-companion-input w-full px-3.5 py-2 rounded-xl border border-amber-200 bg-white focus:outline-none focus:border-amber-500 text-sm" placeholder="${placeholder}" value="${prevVal.replace(/"/g, '&quot;')}">
+        </div>
+      `;
+    }
+    inputsBox.innerHTML = html;
+  }
+
+  updateViewModeButtons() {
+    const btnGroups = document.getElementById("btn-admin-view-groups");
+    const btnAll = document.getElementById("btn-admin-view-all");
+    if (!btnGroups || !btnAll) return;
+
+    if (this.viewMode === "groups") {
+      btnGroups.className = "px-3 py-1.5 rounded-lg bg-white font-semibold text-amber-900 shadow-xs flex items-center gap-1.5 transition";
+      btnAll.className = "px-3 py-1.5 rounded-lg text-stone-600 hover:text-stone-900 font-medium flex items-center gap-1.5 transition";
+    } else {
+      btnAll.className = "px-3 py-1.5 rounded-lg bg-white font-semibold text-amber-900 shadow-xs flex items-center gap-1.5 transition";
+      btnGroups.className = "px-3 py-1.5 rounded-lg text-stone-600 hover:text-stone-900 font-medium flex items-center gap-1.5 transition";
+    }
+  }
+
+  parseGuestInfo(g) {
+    let rawName = (g.name || "").trim();
+    let titular = rawName.replace(/\s*\(\+.*?\)\s*$/, "").trim() || rawName || "Convidado";
+    let companions = Array.isArray(g.companions) ? g.companions.map(c => typeof c === "string" ? c.trim() : "").filter(Boolean) : [];
+
+    if (companions.length === 0 && rawName.includes("(+")) {
+      const match = rawName.match(/\(\+\s*(.*?)\)/);
+      if (match && match[1]) {
+        companions = match[1].split(",").map(c => c.trim()).filter(Boolean);
+      }
+    }
+
+    const matchCount = (g.count || "").match(/\d+/);
+    const declaredCount = matchCount ? parseInt(matchCount[0], 10) : 1;
+    const totalPeople = Math.max(declaredCount, 1 + companions.length);
+
+    return {
+      id: g.id,
+      rawName,
+      titular,
+      companions,
+      totalPeople,
+      countStr: g.count || `${totalPeople} pessoas`,
+      date: g.date || "Data não informada",
+      message: g.message || ""
+    };
+  }
+
   renderAttendedModeration(searchTerm = "") {
     const listContainer = document.getElementById("admin-attended-list") || document.getElementById("admin-attended-container");
     if (!listContainer) return;
 
-    let attended = WeddingStore.getAttendedGuests();
+    const rawList = WeddingStore.getAttendedGuests();
+    const parsedList = rawList.map(g => this.parseGuestInfo(g));
 
-    // Atualiza contadores de métricas
-    const totalGroupsEl = document.getElementById("admin-attended-total-groups");
-    const totalPeopleEl = document.getElementById("admin-attended-total-people");
-    const lastDateEl = document.getElementById("admin-attended-last-date");
+    // Métricas gerais calculadas
+    let totalGroups = parsedList.length;
+    let totalTitulares = parsedList.length;
+    let totalCompanions = parsedList.reduce((acc, cur) => acc + cur.companions.length, 0);
+    let totalPeople = parsedList.reduce((acc, cur) => acc + cur.totalPeople, 0);
+    let lastDate = parsedList.length > 0 ? parsedList[0].date : "Nenhuma ainda";
+
+    const elTotalGroups = document.getElementById("admin-attended-total-groups");
+    const elTotalTitulares = document.getElementById("admin-attended-total-titulares");
+    const elTotalCompanions = document.getElementById("admin-attended-total-companions");
+    const elTotalPeople = document.getElementById("admin-attended-total-people");
+    const elLastDate = document.getElementById("admin-attended-last-date");
     const counterDisplay = document.getElementById("admin-attended-counter-display");
 
-    let totalPeopleCount = 0;
-    attended.forEach(g => {
-      const match = (g.count || "1").match(/\d+/);
-      totalPeopleCount += match ? parseInt(match[0], 10) : 1;
-    });
-
-    if (totalGroupsEl) totalGroupsEl.textContent = attended.length;
-    if (totalPeopleEl) totalPeopleEl.textContent = `${totalPeopleCount} pessoas`;
-    if (lastDateEl) {
-      lastDateEl.textContent = attended.length > 0 ? (attended[0].date || "Recentemente") : "Nenhuma ainda";
+    if (elTotalGroups) elTotalGroups.textContent = totalGroups;
+    if (elTotalTitulares) elTotalTitulares.textContent = totalTitulares;
+    if (elTotalCompanions) elTotalCompanions.textContent = totalCompanions;
+    if (elTotalPeople) elTotalPeople.textContent = `${totalPeople} pessoas`;
+    if (elLastDate) {
+      elLastDate.textContent = lastDate !== "Nenhuma ainda" ? `Última: ${lastDate}` : "";
     }
 
+    // Filtro de busca (busca por titular, por acompanhante, por data ou mensagem)
+    let filteredList = parsedList;
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
-      attended = attended.filter(g => 
-        (g.name && g.name.toLowerCase().includes(term)) ||
-        (g.date && g.date.toLowerCase().includes(term)) ||
-        (g.message && g.message.toLowerCase().includes(term))
+      filteredList = parsedList.filter(g =>
+        g.titular.toLowerCase().includes(term) ||
+        g.companions.some(c => c.toLowerCase().includes(term)) ||
+        g.date.toLowerCase().includes(term) ||
+        g.message.toLowerCase().includes(term)
       );
     }
 
     if (counterDisplay) {
-      counterDisplay.textContent = searchTerm 
-        ? `${attended.length} resultado(s) para "${searchTerm}"`
-        : `Total de ${attended.length} grupo(s) confirmado(s)`;
+      counterDisplay.textContent = searchTerm
+        ? `${filteredList.length} confirmação(ões) encontrada(s) para "${searchTerm}"`
+        : `Total de ${totalGroups} grupo(s) e ${totalPeople} pessoa(s) confirmada(s)`;
     }
 
-    if (attended.length === 0) {
+    if (filteredList.length === 0) {
       listContainer.innerHTML = `
-        <div class="text-center py-10 px-4 bg-stone-50 rounded-2xl border border-dashed border-stone-200">
-          <span class="text-4xl mb-2 block">📋</span>
-          <h4 class="font-serif font-bold text-stone-700 text-base">Nenhuma confirmação encontrada</h4>
-          <p class="text-xs text-stone-400 mt-1">
-            ${searchTerm ? "Tente buscar por outro nome ou dia." : "As confirmações de presença feitas pelos convidados aparecerão aqui com o nome, quantidade de pessoas e dia/horário exato."}
+        <div class="text-center py-12 px-4 bg-stone-50 rounded-2xl border border-dashed border-stone-200">
+          <span class="text-4xl mb-3 block">📋</span>
+          <h4 class="font-serif font-bold text-stone-700 text-base">
+            ${searchTerm ? "Nenhuma confirmação encontrada para a busca" : "Nenhuma presença confirmada no momento"}
+          </h4>
+          <p class="text-xs text-stone-400 mt-1.5 max-w-md mx-auto">
+            ${searchTerm
+              ? "Tente buscar por outro nome de titular, convidado adicionado ou data."
+              : "Assim que os convidados confirmarem pelo WhatsApp no site ou forem adicionados manualmente acima, todos os nomes e convidados adicionados aparecerão aqui organizados."}
           </p>
         </div>
       `;
       return;
     }
 
-    listContainer.innerHTML = attended.map((g, idx) => `
-      <div class="p-4 rounded-2xl border border-stone-200 bg-white hover:border-amber-300 transition-all shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-3">
-        <div class="flex items-start sm:items-center gap-3.5">
-          <div class="w-10 h-10 rounded-full bg-amber-100 border border-amber-300 flex items-center justify-center font-serif font-bold text-amber-900 text-sm shrink-0">
-            ${idx + 1}
-          </div>
-          <div>
-            <div class="flex flex-wrap items-center gap-2">
-              <h5 class="font-bold text-stone-900 text-sm sm:text-base font-serif">${g.name}</h5>
-              <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-semibold border border-emerald-200">
-                👥 ${g.count || "1 pessoa"}
-              </span>
+    // Modo 1: Visão por Famílias / Confirmações
+    if (this.viewMode === "groups") {
+      listContainer.innerHTML = filteredList.map((g, idx) => `
+        <div class="p-4 sm:p-5 rounded-2xl border border-stone-200 bg-white hover:border-amber-300 transition-all shadow-xs flex flex-col md:flex-row md:items-start justify-between gap-4">
+          <div class="flex items-start gap-3.5 flex-1">
+            <div class="w-10 h-10 rounded-full bg-amber-100 border border-amber-300 flex items-center justify-center font-serif font-bold text-amber-900 text-sm shrink-0 mt-0.5">
+              ${idx + 1}
             </div>
-            ${g.companions && g.companions.length > 0 ? `
-              <div class="text-xs text-amber-900 mt-1.5 flex flex-wrap items-center gap-1.5 font-medium">
-                <span class="text-stone-500 text-[11px]">Quem vai:</span>
-                ${g.companions.map(c => `<span class="bg-amber-100/90 text-amber-950 px-2 py-0.5 rounded-md border border-amber-200/80 text-[11px] font-semibold">${c}</span>`).join("")}
+            <div class="space-y-2 flex-1">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="text-[11px] font-semibold text-stone-400 uppercase tracking-wider">Responsável:</span>
+                <h4 class="font-serif font-bold text-stone-900 text-base sm:text-lg">${g.titular}</h4>
+                <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-semibold border border-emerald-200">
+                  👥 Total: ${g.totalPeople} ${g.totalPeople === 1 ? "pessoa" : "pessoas"}
+                </span>
               </div>
-            ` : ""}
-            ${g.message ? `<p class="text-xs text-stone-600 italic mt-1 bg-stone-50 px-2.5 py-1 rounded-lg border border-stone-100">"${g.message}"</p>` : ""}
+
+              <!-- Lista de Convidados que foram adicionados -->
+              ${g.companions.length > 0 ? `
+                <div class="p-3 rounded-xl bg-amber-50/70 border border-amber-200/80">
+                  <div class="text-[11px] font-bold text-amber-900 uppercase tracking-wider flex items-center gap-1.5 mb-2">
+                    <span>👥</span>
+                    <span>Convidados que foram adicionados (${g.companions.length}):</span>
+                  </div>
+                  <div class="flex flex-wrap gap-1.5">
+                    ${g.companions.map(comp => `
+                      <span class="inline-flex items-center gap-1.5 bg-white text-stone-800 px-3 py-1 rounded-lg border border-amber-300 text-xs font-medium shadow-2xs">
+                        <span class="text-amber-600 font-bold">✓</span>
+                        <span class="font-semibold">${comp}</span>
+                      </span>
+                    `).join("")}
+                  </div>
+                </div>
+              ` : `
+                <div class="text-xs text-stone-400 italic">
+                  Apenas o titular (sem convidados adicionados)
+                </div>
+              `}
+
+              ${g.message ? `
+                <p class="text-xs text-stone-600 italic bg-stone-50 px-3 py-1.5 rounded-lg border border-stone-200/60 inline-block">
+                  💬 "${g.message}"
+                </p>
+              ` : ""}
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between md:flex-col md:items-end gap-2.5 pt-3 md:pt-0 border-t md:border-t-0 border-stone-100 shrink-0">
+            <span class="text-[11px] font-semibold text-amber-900 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200/80 inline-flex items-center gap-1 shadow-2xs">
+              <span>📅</span> ${g.date}
+            </span>
+            <button onclick="adminPanel.deleteAttended('${g.id}')" class="p-2 text-stone-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition flex items-center gap-1 text-xs" title="Excluir da Lista">
+              <svg class="w-4 h-4 fill-none stroke-current" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+              <span class="md:hidden text-rose-600 font-medium">Excluir</span>
+            </button>
           </div>
         </div>
+      `).join("");
+      return;
+    }
 
-        <div class="flex items-center justify-between md:justify-end gap-3 pt-2 md:pt-0 border-t md:border-t-0 border-stone-100">
-          <div class="text-right">
-            <span class="text-[11px] font-semibold text-amber-900 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200/80 inline-flex items-center gap-1 shadow-sm">
-              <span>📅</span> ${g.date || "Data não informada"}
-            </span>
-          </div>
-          <button onclick="adminPanel.deleteAttended('${g.id}')" class="p-2 text-stone-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition" title="Excluir da Lista">
-            <svg class="w-4 h-4 fill-none stroke-current" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-          </button>
+    // Modo 2: Lista Completa de Todos os Nomes Individuais (Titulares + Convidados Adicionados)
+    const allIndividualNames = [];
+    filteredList.forEach(g => {
+      allIndividualNames.push({
+        name: g.titular,
+        type: "titular",
+        responsible: g.titular,
+        date: g.date
+      });
+      g.companions.forEach(comp => {
+        allIndividualNames.push({
+          name: comp,
+          type: "companion",
+          responsible: g.titular,
+          date: g.date
+        });
+      });
+    });
+
+    // Ordenação alfabética de todos os nomes
+    allIndividualNames.sort((a, b) => a.name.localeCompare(b.name, "pt-BR"));
+
+    listContainer.innerHTML = `
+      <div class="bg-white rounded-2xl border border-stone-200 overflow-hidden shadow-xs">
+        <div class="px-4 py-3 bg-amber-50/80 border-b border-amber-100 flex items-center justify-between text-xs">
+          <span class="font-bold text-amber-950 uppercase tracking-wider flex items-center gap-1.5">
+            <span>👥</span> Lista Nominal de Todos os Nomes Confirmados
+          </span>
+          <span class="font-bold text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full border border-emerald-200">
+            Total: ${allIndividualNames.length} pessoas
+          </span>
+        </div>
+        <div class="divide-y divide-stone-100">
+          ${allIndividualNames.map((person, idx) => `
+            <div class="px-4 py-3 flex items-center justify-between text-xs sm:text-sm hover:bg-amber-50/30 transition">
+              <div class="flex items-center gap-3">
+                <span class="w-6 text-stone-400 font-mono text-xs text-right">${idx + 1}.</span>
+                <span class="font-bold text-stone-800">${person.name}</span>
+                ${person.type === "titular"
+                  ? `<span class="text-[10px] bg-stone-100 text-stone-700 px-2 py-0.5 rounded-md font-semibold border border-stone-200">Titular</span>`
+                  : `<span class="text-[10px] bg-amber-100 text-amber-900 px-2 py-0.5 rounded-md font-semibold border border-amber-200">Convidado de: ${person.responsible}</span>`
+                }
+              </div>
+              <span class="text-[11px] text-stone-400 hidden sm:inline font-mono">${person.date}</span>
+            </div>
+          `).join("")}
         </div>
       </div>
-    `).join("");
+    `;
   }
 
   deleteAttended(id) {
     if (confirm("Deseja remover esta confirmação da lista?")) {
       WeddingStore.deleteAttendedGuest(id);
-      showToast("Confirmação removida.");
-      this.renderAttendedModeration();
+      showToast("Confirmação removida com sucesso.");
+      this.renderAttendedModeration(document.getElementById("admin-attended-search")?.value.trim() || "");
       this.renderMetrics();
     }
   }
 
   copyAttendedList() {
-    const attended = WeddingStore.getAttendedGuests();
-    if (attended.length === 0) {
-      alert("A lista está vazia.");
+    const rawList = WeddingStore.getAttendedGuests();
+    if (rawList.length === 0) {
+      alert("A lista de presenças está vazia no momento.");
       return;
     }
 
-    let totalPeople = 0;
-    attended.forEach(g => {
-      const match = (g.count || "1").match(/\d+/);
-      totalPeople += match ? parseInt(match[0], 10) : 1;
+    const parsedList = rawList.map(g => this.parseGuestInfo(g));
+    const totalGroups = parsedList.length;
+    const totalPeople = parsedList.reduce((acc, cur) => acc + cur.totalPeople, 0);
+
+    const allNames = [];
+    parsedList.forEach(g => {
+      allNames.push({ name: g.titular, type: "Titular" });
+      g.companions.forEach(c => {
+        allNames.push({ name: c, type: `Convidado de ${g.titular}` });
+      });
     });
+    allNames.sort((a, b) => a.name.localeCompare(b.name, "pt-BR"));
 
     let text = `📋 LISTA DE PRESENÇAS CONFIRMADAS - BODAS DE OURO JOSÉ & CIDA\n`;
-    text += `Total de confirmações: ${attended.length} grupos | Total de pessoas: ${totalPeople}\n`;
+    text += `Total de confirmações: ${totalGroups} grupos | Total de pessoas: ${totalPeople}\n`;
     text += `Gerado em: ${new Date().toLocaleDateString("pt-BR")} às ${new Date().toLocaleTimeString("pt-BR")}\n`;
     text += `==============================================\n\n`;
 
-    attended.forEach((g, i) => {
-      text += `${i + 1}. ${g.name} - ${g.count || "1 pessoa"}\n`;
-      text += `   📅 Confirmado em: ${g.date || "Data não registrada"}\n`;
+    text += `📌 1. DETALHAMENTO POR CONFIRMAÇÕES / FAMÍLIAS:\n`;
+    parsedList.forEach((g, i) => {
+      text += `\n${i + 1}. RESPONSÁVEL: ${g.titular} (${g.totalPeople} pessoas)\n`;
+      if (g.companions.length > 0) {
+        text += `   👥 Convidados adicionados: ${g.companions.join(", ")}\n`;
+      } else {
+        text += `   👥 Apenas o titular\n`;
+      }
+      text += `   📅 Confirmado em: ${g.date}\n`;
       if (g.message) text += `   💬 Mensagem: "${g.message}"\n`;
-      text += `\n`;
+    });
+
+    text += `\n\n==============================================\n`;
+    text += `👥 2. LISTA NOMINAL DE TODAS AS PESSOAS CONFIRMADAS (${allNames.length} NOMES):\n`;
+    allNames.forEach((p, idx) => {
+      text += `${idx + 1}. ${p.name} (${p.type})\n`;
     });
 
     navigator.clipboard.writeText(text).then(() => {
-      showToast("Lista de presenças copiada com sucesso! 📋");
+      showToast("Lista completa de presenças copiada com sucesso! 📋");
     }).catch(() => {
       alert("Lista copiada:\n\n" + text);
     });
   }
 
   printAttendedList() {
-    const attended = WeddingStore.getAttendedGuests();
+    const rawList = WeddingStore.getAttendedGuests();
+    if (rawList.length === 0) {
+      alert("A lista de presenças está vazia no momento.");
+      return;
+    }
+
     let printWindow = window.open("", "_blank");
     if (!printWindow) {
       alert("Por favor, permita janelas pop-up para imprimir a lista.");
       return;
     }
 
-    let totalPeopleCount = 0;
-    attended.forEach(g => {
-      const match = (g.count || "1").match(/\d+/);
-      totalPeopleCount += match ? parseInt(match[0], 10) : 1;
+    const parsedList = rawList.map(g => this.parseGuestInfo(g));
+    const totalGroups = parsedList.length;
+    const totalPeople = parsedList.reduce((acc, cur) => acc + cur.totalPeople, 0);
+
+    const allNames = [];
+    parsedList.forEach(g => {
+      allNames.push({ name: g.titular, type: "Titular", responsible: g.titular });
+      g.companions.forEach(c => {
+        allNames.push({ name: c, type: `Convidado`, responsible: g.titular });
+      });
     });
+    allNames.sort((a, b) => a.name.localeCompare(b.name, "pt-BR"));
 
     let html = `
       <!DOCTYPE html>
@@ -605,15 +854,19 @@ class WeddingAdminPanel {
         <title>Lista de Presenças - Bodas de Ouro José & Cida</title>
         <meta charset="utf-8">
         <style>
-          body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 25px; color: #333; line-height: 1.5; }
+          body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 25px; color: #222; line-height: 1.5; }
           h1 { color: #854d0e; margin-bottom: 4px; font-size: 22px; }
+          h2 { color: #854d0e; margin-top: 25px; margin-bottom: 8px; font-size: 16px; border-bottom: 1px solid #e5e7eb; padding-bottom: 4px; }
           p { margin: 4px 0 16px 0; font-size: 13px; color: #666; }
           .summary { background: #fefce8; border: 1px solid #fef08a; padding: 12px; border-radius: 8px; margin-bottom: 20px; font-size: 14px; font-weight: bold; }
           table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
-          th, td { border: 1px solid #e5e7eb; padding: 10px 12px; text-align: left; }
+          th, td { border: 1px solid #e5e7eb; padding: 8px 10px; text-align: left; }
           th { background: #f8fafc; font-weight: 600; color: #475569; }
           tr:nth-child(even) { background: #f9fafb; }
           .badge { display: inline-block; background: #ecfdf5; color: #065f46; padding: 2px 8px; border-radius: 9999px; font-weight: 600; font-size: 11px; }
+          .tag-comp { display: inline-block; background: #fef3c7; color: #78350f; padding: 1px 6px; border-radius: 4px; font-size: 11px; margin: 1px 2px; }
+          .checkbox-col { width: 30px; text-align: center; }
+          .box { width: 14px; height: 14px; border: 1px solid #999; display: inline-block; border-radius: 2px; }
           @media print { button { display: none; } }
         </style>
       </head>
@@ -621,30 +874,63 @@ class WeddingAdminPanel {
         <h1>🥂 Bodas de Ouro: José & Cida (50 Anos)</h1>
         <p>Relatório de Convidados Confirmados • Gerado em ${new Date().toLocaleDateString("pt-BR")} às ${new Date().toLocaleTimeString("pt-BR")}</p>
         <div class="summary">
-          Total de Confirmações: ${attended.length} grupos | Total de Convidados: ${totalPeopleCount} pessoas
+          Total de Confirmações: ${totalGroups} grupos | Total Geral de Pessoas Confirmadas: ${totalPeople} convidados
         </div>
+
+        <h2>1. Detalhamento por Famílias / Grupos</h2>
         <table>
           <thead>
             <tr>
-              <th style="width: 40px">#</th>
-              <th>Nome / Família</th>
-              <th style="width: 130px">Qtd. Pessoas</th>
-              <th style="width: 170px">Dia da Confirmação</th>
+              <th style="width: 35px">#</th>
+              <th>Titular / Responsável</th>
+              <th>Convidados Adicionados</th>
+              <th style="width: 90px">Total</th>
+              <th style="width: 150px">Data da Confirmação</th>
               <th>Observação / Recado</th>
             </tr>
           </thead>
           <tbody>
-            ${attended.map((g, i) => `
+            ${parsedList.map((g, i) => `
               <tr>
                 <td>${i + 1}</td>
-                <td><strong>${g.name}</strong></td>
-                <td><span class="badge">${g.count || "1 pessoa"}</span></td>
-                <td>${g.date || "-"}</td>
+                <td><strong>${g.titular}</strong></td>
+                <td>
+                  ${g.companions.length > 0
+                    ? g.companions.map(c => `<span class="tag-comp">${c}</span>`).join(" ")
+                    : "<span style='color:#999; font-size:11px'>Apenas o titular</span>"}
+                </td>
+                <td><span class="badge">${g.totalPeople} ${g.totalPeople === 1 ? "pessoa" : "pessoas"}</span></td>
+                <td>${g.date}</td>
                 <td>${g.message || "-"}</td>
               </tr>
             `).join("")}
           </tbody>
         </table>
+
+        <h2>2. Lista Nominal Completa (Checklist para Entrada / Portaria)</h2>
+        <table>
+          <thead>
+            <tr>
+              <th class="checkbox-col">Visto</th>
+              <th style="width: 35px">#</th>
+              <th>Nome Completo do Convidado</th>
+              <th>Tipo / Vínculo</th>
+              <th>Data Confirmação</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${allNames.map((person, i) => `
+              <tr>
+                <td class="checkbox-col"><span class="box"></span></td>
+                <td>${i + 1}</td>
+                <td><strong>${person.name}</strong></td>
+                <td>${person.type === "Titular" ? "Titular / Responsável" : `Convidado de ${person.responsible}`}</td>
+                <td>${person.date || "-"}</td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+
         <div style="margin-top: 25px; text-align: center;">
           <button onclick="window.print()" style="padding: 10px 20px; background: #b45309; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold;">
             Imprimir Agora

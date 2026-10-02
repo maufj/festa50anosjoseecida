@@ -586,7 +586,7 @@
           <span class="text-xl sm:text-2xl">👑</span>
           <div>
             <h3 class="font-serif text-base sm:text-xl font-bold text-stone-800">Área da Família • Bodas de Ouro</h3>
-            <p class="text-[10px] sm:text-xs text-stone-500">Controle de presenças e gerenciamento do site de José e Cida</p>
+            <p class="text-[10px] sm:text-xs text-stone-500">Controle de presenças confirmadas e lista de convidados</p>
           </div>
         </div>
         <div class="flex items-center gap-2">
@@ -597,8 +597,8 @@
         </div>
       </div>
 
-      <!-- Barra de Abas -->
-      <div class="flex border-b border-stone-200 bg-white px-3 sm:px-6 overflow-x-auto text-xs whitespace-nowrap gap-1">
+      <!-- Barra de Abas (Oculta por padrão para manter o foco total na lista de presenças confirmadas) -->
+      <div id="admin-tabs-bar" class="hidden flex border-b border-stone-200 bg-white px-3 sm:px-6 overflow-x-auto text-xs whitespace-nowrap gap-1">
         <button data-tab="attended" class="admin-tab-btn py-3 px-3.5 border-b-2 border-amber-800 font-semibold text-amber-900 bg-amber-100 rounded-t-lg">
           👥 Presenças Confirmadas
         </button>
@@ -619,26 +619,26 @@
       <!-- Corpo com Rolagem -->
       <div class="flex-1 overflow-y-auto p-4 sm:p-6 bg-stone-50/50">
 
-        <!-- ABA 1: PRESENÇAS CONFIRMADAS (CONSULTA DE QUEM CONFIRMOU EM TAL DIA) -->
+        <!-- ABA 1: PRESENÇAS CONFIRMADAS (CONTROLE EXCLUSIVO DE QUEM CONFIRMOU E ACOMPANHANTES) -->
         <div id="tab-panel-attended" class="admin-tab-panel space-y-6">
           <!-- Cabeçalho com Resumo e Ações Rápidas -->
           <div class="bg-white p-5 sm:p-6 rounded-2xl border border-stone-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
               <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 font-semibold text-xs mb-2">
-                <span>✅</span> Controle de Convidados
+                <span>✅</span> Controle de Convidados Confirmados
               </div>
               <h3 class="font-serif font-bold text-xl sm:text-2xl text-stone-800">
                 Lista de Presenças Confirmadas
               </h3>
               <p class="text-xs sm:text-sm text-stone-500 mt-1">
-                Acompanhe quem confirmou presença, quantas pessoas virão e a data/horário exato de cada confirmação.
+                Controle completo com o nome de quem confirmou e todos os convidados que foram adicionados.
               </p>
             </div>
 
             <!-- Botões de Ação: Exportar / Copiar / Imprimir -->
             <div class="flex flex-wrap items-center gap-2 shrink-0">
               <button onclick="adminPanel.copyAttendedList()" class="px-3.5 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-900 text-xs font-semibold flex items-center gap-1.5 transition shadow-sm">
-                <span>📋</span> Copiar Lista
+                <span>📋</span> Copiar Lista Completa
               </button>
               <button onclick="adminPanel.printAttendedList()" class="px-3.5 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 border border-stone-300 text-stone-800 text-xs font-semibold flex items-center gap-1.5 transition shadow-sm">
                 <span>🖨️</span> Imprimir / PDF
@@ -647,83 +647,128 @@
           </div>
 
           <!-- Cards de Métricas de Presença -->
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-stone-200 shadow-sm flex items-center justify-between">
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+            <div class="bg-white p-4 rounded-2xl border border-stone-200 shadow-xs flex items-center justify-between">
               <div>
-                <span class="text-xs text-stone-500 font-semibold uppercase tracking-wider block">Famílias / Grupos</span>
-                <span id="admin-attended-total-groups" class="font-serif text-2xl sm:text-3xl font-bold text-amber-800 mt-1 block">0</span>
+                <span class="text-[11px] text-stone-500 font-semibold uppercase tracking-wider block">Famílias / Grupos</span>
+                <span id="admin-attended-total-groups" class="font-serif text-2xl sm:text-3xl font-bold text-amber-800 mt-0.5 block">0</span>
               </div>
-              <span class="text-3xl">💌</span>
+              <span class="text-2xl sm:text-3xl">💌</span>
             </div>
-            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-stone-200 shadow-sm flex items-center justify-between">
+            <div class="bg-white p-4 rounded-2xl border border-stone-200 shadow-xs flex items-center justify-between">
               <div>
-                <span class="text-xs text-stone-500 font-semibold uppercase tracking-wider block">Total de Pessoas Estimado</span>
-                <span id="admin-attended-total-people" class="font-serif text-2xl sm:text-3xl font-bold text-emerald-700 mt-1 block">0</span>
+                <span class="text-[11px] text-stone-500 font-semibold uppercase tracking-wider block">Titulares / Responsáveis</span>
+                <span id="admin-attended-total-titulares" class="font-serif text-2xl sm:text-3xl font-bold text-stone-800 mt-0.5 block">0</span>
               </div>
-              <span class="text-3xl">👥</span>
+              <span class="text-2xl sm:text-3xl">👤</span>
             </div>
-            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-stone-200 shadow-sm flex items-center justify-between">
+            <div class="bg-white p-4 rounded-2xl border border-stone-200 shadow-xs flex items-center justify-between">
               <div>
-                <span class="text-xs text-stone-500 font-semibold uppercase tracking-wider block">Última Confirmação</span>
-                <span id="admin-attended-last-date" class="font-semibold text-xs sm:text-sm text-stone-700 mt-1 block">Nenhuma</span>
+                <span class="text-[11px] text-stone-500 font-semibold uppercase tracking-wider block">Convidados Adicionados</span>
+                <span id="admin-attended-total-companions" class="font-serif text-2xl sm:text-3xl font-bold text-amber-700 mt-0.5 block">0</span>
               </div>
-              <span class="text-3xl">📅</span>
+              <span class="text-2xl sm:text-3xl">👥</span>
+            </div>
+            <div class="bg-white p-4 rounded-2xl border border-stone-200 shadow-xs flex items-center justify-between">
+              <div>
+                <span class="text-[11px] text-stone-500 font-semibold uppercase tracking-wider block">Total Geral de Pessoas</span>
+                <span id="admin-attended-total-people" class="font-serif text-2xl sm:text-3xl font-bold text-emerald-700 mt-0.5 block">0</span>
+              </div>
+              <span class="text-2xl sm:text-3xl">✨</span>
             </div>
           </div>
 
-          <!-- Formulário para Adicionar Confirmação Manual (WhatsApp / Telefone / Pessoalmente) -->
-          <div class="bg-white p-5 sm:p-6 rounded-2xl border border-amber-200/80 shadow-sm">
-            <div class="flex items-center justify-between mb-3">
+          <!-- Formulário para Adicionar Confirmação Manualmente (WhatsApp / Telefone / Pessoalmente) -->
+          <div class="bg-white p-5 sm:p-6 rounded-2xl border border-amber-200/80 shadow-sm space-y-3">
+            <div class="flex items-center justify-between">
               <h4 class="font-serif font-bold text-stone-800 text-base flex items-center gap-2">
                 <span>➕</span> Registrar Confirmação Manualmente
               </h4>
-              <span class="text-[11px] text-stone-400">Para quando alguém confirmar por telefone ou pessoalmente</span>
+              <span class="text-[11px] text-stone-400">Para confirmações por telefone, WhatsApp ou pessoalmente</span>
             </div>
-            <form id="admin-add-attended-form" class="grid grid-cols-1 sm:grid-cols-12 gap-3">
-              <div class="sm:col-span-5">
-                <label class="block text-xs font-semibold text-stone-600 mb-1">Nome do Convidado / Família *</label>
-                <input type="text" id="admin-att-name" required placeholder="Ex: Tio João & Família" class="w-full px-3.5 py-2 rounded-xl border text-sm">
+            <form id="admin-add-attended-form" class="space-y-3">
+              <div class="grid grid-cols-1 sm:grid-cols-12 gap-3">
+                <div class="sm:col-span-5">
+                  <label class="block text-xs font-semibold text-stone-600 mb-1">Nome do Titular / Responsável *</label>
+                  <input type="text" id="admin-att-name" required placeholder="Ex: Tio João" class="w-full px-3.5 py-2 rounded-xl border border-stone-200 text-sm focus:outline-none focus:border-amber-500">
+                </div>
+                <div class="sm:col-span-3">
+                  <label class="block text-xs font-semibold text-stone-600 mb-1">Total de Pessoas</label>
+                  <select id="admin-att-count" class="w-full px-3.5 py-2 rounded-xl border border-stone-200 text-sm bg-white focus:outline-none focus:border-amber-500">
+                    <option value="1 pessoa">1 pessoa (apenas titular)</option>
+                    <option value="2 pessoas" selected>2 pessoas (titular + 1)</option>
+                    <option value="3 pessoas">3 pessoas (titular + 2)</option>
+                    <option value="4 pessoas">4 pessoas (titular + 3)</option>
+                    <option value="5 pessoas ou mais">5 pessoas ou mais</option>
+                  </select>
+                </div>
+                <div class="sm:col-span-4">
+                  <label class="block text-xs font-semibold text-stone-600 mb-1">Dia da Confirmação (Data)</label>
+                  <input type="text" id="admin-att-date" placeholder="Ex: Hoje ou 02/10/2026" class="w-full px-3.5 py-2 rounded-xl border border-stone-200 text-sm focus:outline-none focus:border-amber-500">
+                </div>
               </div>
-              <div class="sm:col-span-3">
-                <label class="block text-xs font-semibold text-stone-600 mb-1">Quantidade de Pessoas</label>
-                <select id="admin-att-count" class="w-full px-3.5 py-2 rounded-xl border text-sm bg-white">
-                  <option value="1 pessoa">1 pessoa</option>
-                  <option value="2 pessoas" selected>2 pessoas</option>
-                  <option value="3 pessoas">3 pessoas</option>
-                  <option value="4 pessoas">4 pessoas</option>
-                  <option value="5 pessoas ou mais">5 pessoas ou mais</option>
-                </select>
+
+              <!-- Container Dinâmico dos Convidados que foram adicionados (Acompanhantes) -->
+              <div id="admin-att-companions-container" class="p-4 rounded-xl bg-amber-50/70 border border-amber-200 space-y-2.5">
+                <div class="flex items-center gap-1.5 text-xs font-bold text-amber-900 uppercase tracking-wider">
+                  <span>👥</span>
+                  <span>Convidados que foram adicionados (Nomes):</span>
+                </div>
+                <div id="admin-att-companions-inputs" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <!-- Gerado dinamicamente via JS de acordo com a quantidade selecionada -->
+                </div>
               </div>
-              <div class="sm:col-span-4">
-                <label class="block text-xs font-semibold text-stone-600 mb-1">Dia da Confirmação (Data)</label>
-                <input type="text" id="admin-att-date" placeholder="Ex: Hoje ou 28/09/2026" class="w-full px-3.5 py-2 rounded-xl border text-sm">
-              </div>
-              <div class="sm:col-span-9">
-                <label class="block text-xs font-semibold text-stone-600 mb-1">Observação / Recado (opcional)</label>
-                <input type="text" id="admin-att-msg" placeholder="Ex: Confirmou pelo WhatsApp / Trazendo as crianças" class="w-full px-3.5 py-2 rounded-xl border text-sm">
-              </div>
-              <div class="sm:col-span-3 flex items-end">
-                <button type="submit" class="w-full py-2.5 px-4 rounded-xl btn-primary-wedding font-semibold text-xs shadow-md">
-                  Salvar Presença
-                </button>
+
+              <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-end">
+                <div class="sm:col-span-9">
+                  <label class="block text-xs font-semibold text-stone-600 mb-1">Observação / Recado (opcional)</label>
+                  <input type="text" id="admin-att-msg" placeholder="Ex: Confirmou por telefone / avisou que vem com a família" class="w-full px-3.5 py-2 rounded-xl border border-stone-200 text-sm focus:outline-none focus:border-amber-500">
+                </div>
+                <div class="sm:col-span-3">
+                  <button type="submit" class="w-full py-2.5 px-4 rounded-xl btn-primary-wedding font-semibold text-xs shadow-md">
+                    Salvar Presença
+                  </button>
+                </div>
               </div>
             </form>
           </div>
 
-          <!-- Barra de Busca e Lista -->
+          <!-- Barra de Busca, Alternador de Visualização e Lista -->
           <div class="bg-white p-5 sm:p-6 rounded-2xl border border-stone-200 shadow-sm space-y-4">
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
-              <div class="relative w-full sm:w-80">
-                <input type="text" id="admin-attended-search" placeholder="🔍 Buscar por nome ou dia..." class="w-full pl-9 pr-4 py-2 rounded-xl border border-stone-200 text-xs focus:outline-none focus:border-amber-500">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+              <div class="relative w-full md:w-80">
+                <input type="text" id="admin-attended-search" placeholder="🔍 Buscar por titular ou convidado..." class="w-full pl-9 pr-4 py-2 rounded-xl border border-stone-200 text-xs focus:outline-none focus:border-amber-500">
                 <span class="absolute left-3 top-2.5 text-stone-400 text-xs">🔍</span>
               </div>
-              <span id="admin-attended-counter-display" class="text-xs text-stone-500 font-medium">Mostrando todas as presenças</span>
+
+              <!-- Alternador de Visualização: Por Grupos vs Todos os Nomes Individuais -->
+              <div class="flex items-center gap-1 bg-stone-100 p-1 rounded-xl self-start md:self-auto text-xs">
+                <button type="button" id="btn-admin-view-groups" class="px-3 py-1.5 rounded-lg bg-white font-semibold text-amber-900 shadow-xs flex items-center gap-1.5 transition">
+                  <span>📋</span> Por Confirmações
+                </button>
+                <button type="button" id="btn-admin-view-all" class="px-3 py-1.5 rounded-lg text-stone-600 hover:text-stone-900 font-medium flex items-center gap-1.5 transition">
+                  <span>👥</span> Todos os Nomes Individuais
+                </button>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between text-xs text-stone-500 pt-1 border-t border-stone-100">
+              <span id="admin-attended-counter-display" class="font-medium">Carregando lista...</span>
+              <span id="admin-attended-last-date" class="text-[11px] text-stone-400"></span>
             </div>
 
             <!-- Tabela / Cards Injetados Dinamicamente via admin.js -->
             <div id="admin-attended-list" class="space-y-3">
               <!-- Injetado dinamicamente -->
             </div>
+          </div>
+
+          <!-- Rodapé discreto com opção para acessar outras abas se necessário -->
+          <div class="pt-2 border-t border-stone-200 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-stone-400">
+            <span>Área da Família • Sistema de Gestão Bodas de Ouro</span>
+            <button type="button" id="btn-toggle-admin-other-tabs" class="text-stone-400 hover:text-amber-800 underline transition text-[11px]">
+              ⚙️ Exibir outras configurações do site (Fotos, Cores e Dados)
+            </button>
           </div>
         </div>
 

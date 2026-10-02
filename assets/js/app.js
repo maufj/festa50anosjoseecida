@@ -490,12 +490,11 @@ class WeddingApp {
 
     // Registra a presença localmente com o dia e horário exato da confirmação
     WeddingStore.addAttendedGuest({
-      name: attendeesDisplayName,
+      name: name,
       count: count,
       companions: companions,
       date: dateFormatted,
-      message: note ? note : `Presença confirmada (${count})! Parabéns ao casal pelos 50 anos de amor! 💛`,
-      photo: `https://images.unsplash.com/photo-${1534528741775 + (Math.floor(Math.random() * 100))}?auto=format&fit=crop&w=200&q=80`
+      message: note ? note : `Presença confirmada (${count})! Parabéns ao casal pelos 50 anos de amor! 💛`
     });
 
     this.renderAttendedGuests();
