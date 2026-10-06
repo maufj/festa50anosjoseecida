@@ -40,6 +40,13 @@ class WeddingStoreClass {
           savedSettings.whatsappNumber = DEFAULT_WEDDING_DATA.settings.whatsappNumber;
         }
 
+        // Atualiza chave PIX caso ainda conste o e-mail de demonstração antigo
+        if (!savedSettings.pixKey || savedSettings.pixKey.includes("bodas.jose.cida@gmail.com")) {
+          savedSettings.pixKey = DEFAULT_WEDDING_DATA.settings.pixKey;
+          savedSettings.pixKeyType = DEFAULT_WEDDING_DATA.settings.pixKeyType;
+          savedSettings.pixRecipient = DEFAULT_WEDDING_DATA.settings.pixRecipient;
+        }
+
         // Garante que seções removidas permaneçam desativadas
         const visibility = { ...DEFAULT_WEDDING_DATA.settings.sectionsVisibility, ...(savedSettings.sectionsVisibility || {}) };
         visibility.story = false;

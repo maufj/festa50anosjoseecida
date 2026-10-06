@@ -19,9 +19,9 @@ const DEFAULT_WEDDING_DATA = {
     venueGoogleMapsUrl: "https://maps.google.com/?q=Chacara+Sagrado+Coracao+de+Jesus+Marilia+SP",
     venueWazeUrl: "https://waze.com/ul?q=Chacara+Sagrado+Coracao+de+Jesus+Marilia+SP",
     dressCode: "",
-    pixKey: "bodas.jose.cida@gmail.com",
-    pixKeyType: "E-mail",
-    pixRecipient: "José Ferreira e Maria Aparecida (Cida)",
+    pixKey: "00020126540014BR.GOV.BCB.PIX0111420695178020217Bodas José e Cida5204000053039865802BR5922Aline Piedade da Silva6009SAO PAULO62140510wmFFX92nN263049E4B",
+    pixKeyType: "Copia e Cola",
+    pixRecipient: "Aline Piedade da Silva",
     musicTitle: "Como É Grande O Meu Amor Por Você",
     musicUrl: "assets/audio/como-e-grande-o-meu-amor-por-voce.mp3",
     whatsappNumber: "5514996712219", // WhatsApp cadastrado para confirmação de presença (com DDD)

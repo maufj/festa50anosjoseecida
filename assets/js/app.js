@@ -631,15 +631,18 @@ class WeddingApp {
 
   // 6. PRESENTES & PIX
   renderGifts(s) {
+    const defaultPixKey = "00020126540014BR.GOV.BCB.PIX0111420695178020217Bodas José e Cida5204000053039865802BR5922Aline Piedade da Silva6009SAO PAULO62140510wmFFX92nN263049E4B";
+    const defaultRecipient = "Aline Piedade da Silva";
     const pixKeyEl = document.getElementById("gifts-pix-key");
     const pixRecipientEl = document.getElementById("gifts-pix-recipient");
-    if (pixKeyEl) pixKeyEl.textContent = s.pixKey || "bodas.jose.cida@gmail.com";
-    if (pixRecipientEl) pixRecipientEl.textContent = s.pixRecipient || "José Ferreira e Maria Aparecida (Cida)";
+    if (pixKeyEl) pixKeyEl.textContent = s.pixKey || defaultPixKey;
+    if (pixRecipientEl) pixRecipientEl.textContent = s.pixRecipient || defaultRecipient;
   }
 
   copyPixKey() {
     const s = WeddingStore.getSettings();
-    const key = s.pixKey || "bodas.jose.cida@gmail.com";
+    const defaultPixKey = "00020126540014BR.GOV.BCB.PIX0111420695178020217Bodas José e Cida5204000053039865802BR5922Aline Piedade da Silva6009SAO PAULO62140510wmFFX92nN263049E4B";
+    const key = s.pixKey || defaultPixKey;
     const onDone = () => {
       const btn = document.getElementById("btn-copy-pix");
       if (btn) {

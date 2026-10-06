@@ -458,21 +458,30 @@
           🎁
         </div>
 
-        <span class="text-xs uppercase tracking-widest text-amber-700 font-bold block mb-1">Chave PIX (E-mail)</span>
+        <span class="text-xs uppercase tracking-widest text-amber-700 font-bold block mb-1">Chave PIX (Copia e Cola)</span>
+
+        <!-- QR Code do PIX para Leitura Direta no Aplicativo do Banco -->
+        <div class="my-4 flex flex-col items-center justify-center">
+          <div class="p-3 bg-white border-2 border-amber-200/90 rounded-2xl shadow-sm inline-block">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=00020126540014BR.GOV.BCB.PIX0111420695178020217Bodas%20Jos%C3%A9%20e%20Cida5204000053039865802BR5922Aline%20Piedade%20da%20Silva6009SAO%20PAULO62140510wmFFX92nN263049E4B" alt="QR Code PIX Bodas José e Cida" class="w-40 h-40 sm:w-44 sm:h-44 object-contain rounded-lg">
+          </div>
+          <span class="text-[11px] text-stone-400 mt-2 block">Aponte a câmera do aplicativo do seu banco ou copie o código abaixo</span>
+        </div>
+
         <div class="bg-stone-50 border border-stone-200/80 rounded-2xl p-4 sm:p-5 my-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div class="text-center sm:text-left select-all">
-            <span class="text-[11px] uppercase tracking-wider text-stone-400 font-semibold block">Chave</span>
-            <span id="gifts-pix-key" class="font-mono text-sm sm:text-base font-bold text-stone-800 break-all">bodas.jose.cida@gmail.com</span>
+          <div class="text-center sm:text-left select-all overflow-hidden flex-1">
+            <span class="text-[11px] uppercase tracking-wider text-stone-400 font-semibold block">Código Copia e Cola</span>
+            <span id="gifts-pix-key" class="font-mono text-xs sm:text-sm font-bold text-stone-800 break-all select-all">00020126540014BR.GOV.BCB.PIX0111420695178020217Bodas José e Cida5204000053039865802BR5922Aline Piedade da Silva6009SAO PAULO62140510wmFFX92nN263049E4B</span>
           </div>
 
           <button id="btn-copy-pix" onclick="weddingApp.copyPixKey()" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-semibold text-xs sm:text-sm tracking-wide shadow-sm transition flex items-center justify-center gap-2 shrink-0 cursor-pointer">
             <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-            <span>Copiar Chave</span>
+            <span>Copiar Código PIX</span>
           </button>
         </div>
 
         <div class="space-y-1 text-xs sm:text-sm text-stone-500">
-          <p><strong class="text-stone-700 font-semibold">Favorecido:</strong> <span id="gifts-pix-recipient">José Ferreira e Maria Aparecida (Cida)</span></p>
+          <p><strong class="text-stone-700 font-semibold">Favorecido:</strong> <span id="gifts-pix-recipient">Aline Piedade da Silva</span></p>
           <p class="text-stone-400 text-xs mt-2 italic">Agradecemos de todo coração por fazer parte da nossa jornada de amor e fé! 💛</p>
         </div>
       </div>
