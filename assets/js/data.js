@@ -11,8 +11,8 @@ const DEFAULT_WEDDING_DATA = {
     coupleInitials: "J & C",
     heroTitle: "Bodas de Ouro • 50 Anos de Amor! 💛",
     heroSubtitle: "Cinco décadas de cumplicidade, fé, família e uma linda história compartilhada.",
-    weddingDate: "2026-12-19T17:00:00", // Formato ISO para contagem regressiva precisa
-    eventTime: "17:00h (Recepção às 16:30h)",
+    weddingDate: "2026-12-19T18:00:00", // Formato ISO para contagem regressiva precisa
+    eventTime: "18:00h",
     venueName: "Chácara Sagrado Coração de Jesus",
     venueAddress: "Chácara Sagrado Coração de Jesus, Marília - SP",
     venueMapQuery: "Chacara Sagrado Coracao de Jesus Marilia SP",

@@ -47,6 +47,14 @@ class WeddingStoreClass {
           savedSettings.pixRecipient = DEFAULT_WEDDING_DATA.settings.pixRecipient;
         }
 
+        // Atualiza horário do evento para 18:00h
+        if (!savedSettings.eventTime || savedSettings.eventTime.includes("17:00") || savedSettings.eventTime.includes("16:30")) {
+          savedSettings.eventTime = "18:00h";
+        }
+        if (!savedSettings.weddingDate || savedSettings.weddingDate.includes("17:00:00")) {
+          savedSettings.weddingDate = "2026-12-19T18:00:00";
+        }
+
         // Garante que seções removidas permaneçam desativadas
         const visibility = { ...DEFAULT_WEDDING_DATA.settings.sectionsVisibility, ...(savedSettings.sectionsVisibility || {}) };
         visibility.story = false;
