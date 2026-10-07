@@ -584,9 +584,13 @@ class WeddingApp {
 
   updateRsvpBannerNames() {
     const coupleNames = document.getElementById("banner-couple-names");
+    const bannerVenue = document.getElementById("banner-venue-name");
+    const s = WeddingStore.getSettings();
     if (coupleNames) {
-      const s = WeddingStore.getSettings();
       coupleNames.textContent = `${s.groomName} & ${s.brideName}`;
+    }
+    if (bannerVenue) {
+      bannerVenue.textContent = s.venueName;
     }
   }
 
@@ -677,9 +681,11 @@ class WeddingApp {
     const vAddr = document.getElementById("venue-card-address");
     const vDate = document.getElementById("venue-card-date");
     const vTime = document.getElementById("venue-card-time");
+    const vLabel = document.getElementById("venue-map-badge");
 
     if (vName) vName.textContent = s.venueName;
     if (vAddr) vAddr.textContent = s.venueAddress;
+    if (vLabel) vLabel.textContent = s.venueName;
     if (vDate) {
       const d = new Date(s.weddingDate);
       vDate.textContent = d.toLocaleDateString("pt-BR", { day: "2-digit", month: "long", year: "numeric" });
@@ -689,6 +695,16 @@ class WeddingApp {
     const btnRoute = document.getElementById("btn-venue-directions");
     if (btnRoute) {
       btnRoute.href = s.venueGoogleMapsUrl || `https://maps.google.com/?q=${encodeURIComponent(s.venueAddress)}`;
+    }
+
+    const btnWaze = document.getElementById("btn-venue-waze");
+    if (btnWaze) {
+      btnWaze.href = s.venueWazeUrl || `https://waze.com/ul?q=${encodeURIComponent(s.venueAddress)}`;
+    }
+
+    const mapIframe = document.getElementById("venue-map-iframe");
+    if (mapIframe && s.venueMapQuery) {
+      mapIframe.src = `https://maps.google.com/maps?q=${encodeURIComponent(s.venueMapQuery)}&t=&z=16&ie=UTF8&iwloc=&output=embed`;
     }
   }
 

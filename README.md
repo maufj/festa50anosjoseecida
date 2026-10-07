@@ -20,11 +20,11 @@ Reúne um design sofisticado com estética dourada nobre, tipografia refinada, a
 ## 📋 Seções do Site
 
 1. **🏠 Página Inicial (Hero)**: Abertura emocionante com foto do casal José & Cida, monograma comemorativo dourado, caligrafia refinada e botões diretos de navegação e confirmação de presença.
-2. **⏳ Contagem Regressiva do Jubileu**: Contagem regressiva precisa em tempo real para **19/12/2026 às 17h** (Dias, Horas, Minutos e Segundos). Quando a data chega, exibe mensagem comemorativa especial.
-3. **🥂 A Celebração**: Detalhes completos da comemoração na **Chácara Sagrado Coração de Jesus** (Data, Horário, Local e rotas).
+2. **⏳ Contagem Regressiva do Jubileu**: Contagem regressiva precisa em tempo real para **19/12/2026 às 18h** (Dias, Horas, Minutos e Segundos). Quando a data chega, exibe mensagem comemorativa especial.
+3. **🥂 A Celebração**: Detalhes completos da comemoração na **Parô Eventos** (Data, Horário, Local e rotas).
 4. **📷 Fotos das Bodas**: Álbum comemorativo com os registros dos 50 anos de união e visualizador Lightbox em tela cheia com fotos personalizáveis.
 5. **💍 Confirmação de Presença (WhatsApp)**: Confirmação direta e prática pelo WhatsApp com formulário opcional para detalhar número de convidados.
-6. **📍 Local das Bodas & Mapa**: Localização da **Chácara Sagrado Coração de Jesus**, mapa interativo e botões de rota direta no Waze e Google Maps.
+6. **📍 Local das Bodas & Mapa**: Localização da **Parô Eventos**, mapa interativo e botões de rota direta no Waze e Google Maps.
 7. **🎵 Música do Casal**: Player flutuante discreto com melodia acústica clássica (*Como É Grande O Meu Amor Por Você*).
 8. **💛 Mensagem Final**: Agradecimento carinhoso de José & Cida com foto de encerramento e acesso discreto à administração da família.
 

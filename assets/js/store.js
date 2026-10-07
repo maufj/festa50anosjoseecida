@@ -27,8 +27,9 @@ class WeddingStoreClass {
         // Senha de acesso da Área da Família: Aline@01
         savedSettings.adminPin = "Aline@01";
 
-        // Atualiza endereço para Marília - SP caso ainda conste Brasília em cache
-        if (!savedSettings.venueAddress || savedSettings.venueAddress.includes("Brasília") || savedSettings.venueAddress.includes("Brasilia")) {
+        // Atualiza endereço para Parô Eventos em Marília - SP caso ainda conste o local antigo em cache
+        if (!savedSettings.venueName || savedSettings.venueName.includes("Sagrado") || !savedSettings.venueGoogleMapsUrl || (!savedSettings.venueGoogleMapsUrl.includes("Par%C3%B4") && !savedSettings.venueGoogleMapsUrl.includes("Parô"))) {
+          savedSettings.venueName = DEFAULT_WEDDING_DATA.settings.venueName;
           savedSettings.venueAddress = DEFAULT_WEDDING_DATA.settings.venueAddress;
           savedSettings.venueGoogleMapsUrl = DEFAULT_WEDDING_DATA.settings.venueGoogleMapsUrl;
           savedSettings.venueWazeUrl = DEFAULT_WEDDING_DATA.settings.venueWazeUrl;
