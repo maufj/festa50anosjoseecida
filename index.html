@@ -90,26 +90,33 @@
   <section id="sec-hero" class="relative min-h-screen flex items-center justify-center text-center px-4 pt-20 sm:pt-24 pb-16 overflow-hidden">
     <!-- Imagem de Fundo em Alta Resolução com Filtro Editorial -->
     <div class="absolute inset-0 z-0">
-      <img src="assets/images/hero-jose-cida-bodas.jpg" alt="José e Cida - Bodas de Ouro" class="w-full h-full object-cover object-center transform scale-105 transition-transform duration-1000 ease-out">
+      <img src="assets/images/hero-jose-cida-bodas.jpg" alt="José e Cida - Bodas de Ouro" class="w-full h-full object-cover object-center transform scale-105 transition-transform duration-1000 ease-out opacity-25 md:opacity-100 blur-[2px] md:blur-none">
       <!-- Gradientes Luxuosos: Champagne e Sombra Nobre -->
-      <div class="absolute inset-0 bg-gradient-to-b from-stone-900/65 via-stone-900/40 to-stone-900/80"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-stone-900/90 via-stone-900/80 to-stone-900/95 md:from-stone-900/65 md:via-stone-900/40 md:to-stone-900/80"></div>
     </div>
 
     <!-- Conteúdo Emocionante Central -->
-    <div class="relative z-10 max-w-4xl mx-auto text-white py-10 sm:py-16 px-2 sm:px-4">
-      <div class="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-amber-200 text-xs sm:text-sm uppercase tracking-widest font-semibold mb-4 sm:mb-6 animate-pulse">
+    <div class="relative z-10 max-w-4xl mx-auto text-white py-8 sm:py-16 px-2 sm:px-4">
+      <div class="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-amber-200 text-xs sm:text-sm uppercase tracking-widest font-semibold mb-3 sm:mb-6 animate-pulse">
         <span id="hero-title-tag">Bodas de Ouro • 50 Anos de Amor! 💛</span>
       </div>
 
-      <h1 class="font-script text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-amber-100 drop-shadow-lg mb-1 sm:mb-2">
+      <h1 class="font-script text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-amber-100 drop-shadow-lg mb-0.5 sm:mb-2">
         <span id="hero-groom-name">José</span>
       </h1>
-      <div class="font-serif text-2xl sm:text-3xl md:text-4xl text-amber-300 font-light italic my-1">&</div>
-      <h1 class="font-script text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-amber-100 drop-shadow-lg mb-4 sm:mb-6">
+      <div class="font-serif text-2xl sm:text-3xl md:text-4xl text-amber-300 font-light italic my-0.5 sm:my-1">&</div>
+      <h1 class="font-script text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-amber-100 drop-shadow-lg mb-2 sm:mb-6">
         <span id="hero-bride-name">Cida</span>
       </h1>
 
-      <div class="gold-divider mx-auto my-4 sm:my-6">
+      <!-- Foto Destaque Responsiva para Celular (Garante que os noivos apareçam 100% sem cortes) -->
+      <div class="md:hidden my-4 max-w-md mx-auto px-1">
+        <div class="hero-mobile-photo-card relative rounded-2xl overflow-hidden bg-stone-900/50 backdrop-blur-sm p-1 ring-1 ring-amber-400/20">
+          <img src="assets/images/hero-jose-cida-bodas.jpg" alt="José e Cida - 50 Anos de Amor" class="w-full h-auto object-contain rounded-xl block">
+        </div>
+      </div>
+
+      <div class="gold-divider mx-auto my-3 sm:my-6">
         <span class="text-amber-300 text-lg sm:text-xl">✦</span>
       </div>
 

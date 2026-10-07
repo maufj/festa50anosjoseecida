@@ -458,5 +458,18 @@ button, a, input, select, textarea {
   animation: bannerPulseGlow 3.5s infinite ease-in-out;
 }
 
+/* =========================================================================
+   CARTÃO DE FOTO DOS NOIVOS PARA MOBILE (HERO RESPONSIVO)
+   ========================================================================= */
+.hero-mobile-photo-card {
+  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.7), 0 0 30px rgba(217, 180, 74, 0.35);
+  border: 1.5px solid rgba(217, 180, 74, 0.75);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero-mobile-photo-card:active {
+  transform: scale(0.99);
+}
+
 
 
