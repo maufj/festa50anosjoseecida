@@ -141,6 +141,12 @@ class WeddingApp {
     if (titleEl) titleEl.textContent = s.heroTitle || "Nós vamos nos casar! ❤️";
     if (subtitleEl) subtitleEl.textContent = s.heroSubtitle || "Um novo capítulo da nossa história está começando.";
     if (navCoupleEl) navCoupleEl.textContent = `${s.groomName.split(" ")[0]} & ${s.brideName.split(" ")[0]}`;
+
+    // Atualiza também os elementos no layout mobile dedicado
+    const mobileTitleEl = document.getElementById("hero-mobile-title-tag");
+    const mobileSubtitleEl = document.getElementById("hero-mobile-subtitle");
+    if (mobileTitleEl) mobileTitleEl.textContent = s.heroTitle || "Bodas de Ouro • 50 Anos de Amor! 💛";
+    if (mobileSubtitleEl) mobileSubtitleEl.textContent = s.heroSubtitle || "Cinco décadas de cumplicidade, fé, família e uma linda história compartilhada.";
   }
 
   // 2. CONTAGEM REGRESSIVA

@@ -87,56 +87,87 @@
   <!-- =========================================================================
        1. PÁGINA INICIAL (HERO)
        ========================================================================= -->
-  <section id="sec-hero" class="relative min-h-screen flex items-center justify-center text-center px-4 pt-20 sm:pt-24 pb-16 overflow-hidden">
-    <!-- Imagem de Fundo em Alta Resolução com Filtro Editorial -->
+  <section id="sec-hero" class="relative min-h-[100dvh] flex flex-col justify-between md:justify-center items-center text-center px-3 pt-18 pb-6 sm:px-4 sm:pt-24 sm:pb-16 overflow-hidden">
+    <!-- Imagem de Fundo Responsiva (Desktop: Horizontal 1024x341 | Celular: Vertical 576x1024 Fiel ao Design) -->
     <div class="absolute inset-0 z-0">
-      <img src="assets/images/hero-jose-cida-bodas.jpg" alt="José e Cida - Bodas de Ouro" class="w-full h-full object-cover object-center transform scale-105 transition-transform duration-1000 ease-out opacity-25 md:opacity-100 blur-[2px] md:blur-none">
+      <picture class="w-full h-full block">
+        <!-- Celular: Versão vertical nobre sem cortes (Noivos 1976 + Alianças + Casal 2026) -->
+        <source media="(max-width: 767px)" srcset="assets/images/hero-jose-cida-bodas-mobile.jpg">
+        <!-- Desktop / Tablet: Versão horizontal panorâmica -->
+        <img src="assets/images/hero-jose-cida-bodas.jpg" alt="José e Cida - Bodas de Ouro" class="w-full h-full object-cover object-center transform scale-100 md:scale-105 transition-transform duration-1000 ease-out">
+      </picture>
       <!-- Gradientes Luxuosos: Champagne e Sombra Nobre -->
-      <div class="absolute inset-0 bg-gradient-to-b from-stone-900/90 via-stone-900/80 to-stone-900/95 md:from-stone-900/65 md:via-stone-900/40 md:to-stone-900/80"></div>
+      <!-- Celular: Gradiente suave que realça o topo e a base sem cobrir os noivos ou as alianças -->
+      <div class="md:hidden absolute inset-0 bg-gradient-to-b from-stone-950/60 via-transparent to-stone-950/80 pointer-events-none"></div>
+      <!-- Desktop: Gradiente editorial clássico -->
+      <div class="hidden md:block absolute inset-0 bg-gradient-to-b from-stone-900/65 via-stone-900/40 to-stone-900/80 pointer-events-none"></div>
     </div>
 
-    <!-- Conteúdo Emocionante Central -->
-    <div class="relative z-10 max-w-4xl mx-auto text-white py-8 sm:py-16 px-2 sm:px-4">
-      <div class="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-amber-200 text-xs sm:text-sm uppercase tracking-widest font-semibold mb-3 sm:mb-6 animate-pulse">
+    <!-- Conteúdo Desktop (Layout Clássico Centralizado) -->
+    <div class="hidden md:block relative z-10 max-w-4xl mx-auto text-white py-8 sm:py-16 px-4">
+      <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-amber-200 text-sm uppercase tracking-widest font-semibold mb-6 animate-pulse">
         <span id="hero-title-tag">Bodas de Ouro • 50 Anos de Amor! 💛</span>
       </div>
 
-      <h1 class="font-script text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-amber-100 drop-shadow-lg mb-0.5 sm:mb-2">
+      <h1 class="font-script text-7xl md:text-8xl lg:text-9xl text-amber-100 drop-shadow-lg mb-2">
         <span id="hero-groom-name">José</span>
       </h1>
-      <div class="font-serif text-2xl sm:text-3xl md:text-4xl text-amber-300 font-light italic my-0.5 sm:my-1">&</div>
-      <h1 class="font-script text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-amber-100 drop-shadow-lg mb-2 sm:mb-6">
+      <div class="font-serif text-3xl md:text-4xl text-amber-300 font-light italic my-1">&</div>
+      <h1 class="font-script text-7xl md:text-8xl lg:text-9xl text-amber-100 drop-shadow-lg mb-6">
         <span id="hero-bride-name">Cida</span>
       </h1>
 
-      <!-- Foto Destaque Responsiva para Celular (Garante que os noivos apareçam 100% sem cortes) -->
-      <div class="md:hidden my-4 max-w-md mx-auto px-1">
-        <div class="hero-mobile-photo-card relative rounded-2xl overflow-hidden bg-stone-900/50 backdrop-blur-sm p-1 ring-1 ring-amber-400/20">
-          <img src="assets/images/hero-jose-cida-bodas.jpg" alt="José e Cida - 50 Anos de Amor" class="w-full h-auto object-contain rounded-xl block">
-        </div>
+      <div class="gold-divider mx-auto my-6">
+        <span class="text-amber-300 text-xl">✦</span>
       </div>
 
-      <div class="gold-divider mx-auto my-3 sm:my-6">
-        <span class="text-amber-300 text-lg sm:text-xl">✦</span>
-      </div>
-
-      <p id="hero-subtitle" class="font-serif italic text-base sm:text-xl md:text-2xl text-stone-200 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed drop-shadow px-2">
+      <p id="hero-subtitle" class="font-serif italic text-xl md:text-2xl text-stone-200 max-w-2xl mx-auto mb-10 leading-relaxed drop-shadow px-2">
         "Cinco décadas de cumplicidade, fé, família e uma linda história compartilhada."
       </p>
 
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full max-w-md sm:max-w-none mx-auto">
-        <button onclick="weddingApp.openWhatsAppRsvp()" class="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm md:text-base font-semibold tracking-wider uppercase transition shadow-2xl flex items-center justify-center gap-2.5 border border-emerald-400/40 transform hover:scale-105">
+      <div class="flex flex-row items-center justify-center gap-4 w-full max-w-md mx-auto">
+        <button onclick="weddingApp.openWhatsAppRsvp()" class="w-auto px-8 py-4 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-base font-semibold tracking-wider uppercase transition shadow-2xl flex items-center justify-center gap-2.5 border border-emerald-400/40 transform hover:scale-105">
           <svg class="w-5 h-5 fill-current shrink-0" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
           <span>Confirmar Presença</span>
         </button>
-        <a href="#sec-big-day" class="w-full sm:w-auto btn-primary-wedding px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-xs sm:text-sm md:text-base font-semibold tracking-wider uppercase transition shadow-2xl flex items-center justify-center text-center">
+        <a href="#sec-big-day" class="w-auto btn-primary-wedding px-8 py-4 rounded-full text-base font-semibold tracking-wider uppercase transition shadow-2xl flex items-center justify-center text-center">
           A Celebração ✨
         </a>
       </div>
     </div>
 
+    <!-- Conteúdo Mobile Exclusivo (Preserva 100% a montagem vertical enviada) -->
+    <div class="md:hidden relative z-10 w-full flex flex-col justify-between min-h-[calc(100dvh-5.5rem)] pt-1 pb-2 text-white">
+      <!-- Topo Mobile: Tag Nobre Translúcida -->
+      <div class="text-center pt-1">
+        <div class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-stone-950/60 backdrop-blur-md border border-amber-300/40 text-amber-200 text-[11px] uppercase tracking-widest font-semibold shadow-lg">
+          <span id="hero-mobile-title-tag">Bodas de Ouro • 50 Anos de Amor! 💛</span>
+        </div>
+      </div>
+
+      <!-- Centro Livre: Foto Vertical Sem Obstruções -->
+      <div class="flex-1 min-h-[38vh] pointer-events-none"></div>
+
+      <!-- Base Mobile: Subtítulo & Ações Principais sobre a seda dourada inferior -->
+      <div class="space-y-2.5 px-2 text-center pb-2">
+        <p id="hero-mobile-subtitle" class="font-serif italic text-xs text-amber-100 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] max-w-xs mx-auto leading-relaxed">
+          "Cinco décadas de cumplicidade, fé, família e uma linda história compartilhada."
+        </p>
+
+        <div class="flex flex-col gap-2 max-w-xs mx-auto">
+          <button onclick="weddingApp.openWhatsAppRsvp()" class="w-full py-3 px-5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold tracking-wider uppercase transition shadow-2xl flex items-center justify-center gap-2 border border-emerald-400/40 transform active:scale-95">
+            <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+            <span>Confirmar Presença</span>
+          </button>
+          <a href="#sec-big-day" class="w-full py-2.5 px-5 rounded-full btn-primary-wedding text-xs font-bold tracking-wider uppercase transition shadow-2xl flex items-center justify-center text-center transform active:scale-95">
+            A Celebração ✨
+          </a>
+        </div>
+      </div>
+    </div>
+
     <!-- Indicador de Rolagem Suave -->
-    <a href="#sec-countdown" class="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/70 hover:text-white transition flex flex-col items-center gap-1">
+    <a href="#sec-countdown" class="hidden sm:flex absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 text-white/70 hover:text-white transition flex-col items-center gap-1 z-20">
       <span class="text-[11px] uppercase tracking-widest">Rolar</span>
       <svg class="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
