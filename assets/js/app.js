@@ -294,6 +294,28 @@ class WeddingApp {
     const photos = WeddingStore.getWeddingGallery(category);
     this.currentWeddingList = photos;
 
+    if (!photos || photos.length === 0) {
+      container.innerHTML = `
+        <div class="col-span-full py-12 md:py-16 px-6 sm:px-10 text-center bg-white/85 backdrop-blur-sm rounded-3xl border border-dashed border-amber-300 shadow-sm max-w-2xl mx-auto my-2">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-amber-100 to-amber-50 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-amber-300 shadow-sm">
+            <span class="text-3xl sm:text-4xl animate-bounce">📸</span>
+          </div>
+          <div class="wedding-badge mb-3">✨ Álbum Comemorativo</div>
+          <h3 class="font-serif text-2xl sm:text-3xl font-bold text-stone-800 mb-3">
+            Em breve teremos as fotos aqui! 💛
+          </h3>
+          <p class="text-stone-600 font-serif italic text-base sm:text-lg mb-3">
+            Os registros e momentos mais especiais das nossas Bodas de Ouro estarão disponíveis aqui em breve.
+          </p>
+          <div class="inline-flex items-center gap-2 px-4 py-2 bg-amber-50/90 rounded-full border border-amber-200 text-amber-900 text-xs sm:text-sm font-medium">
+            <span class="inline-block w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse"></span>
+            <span>Aguardem, logo mais o álbum será atualizado com todas as lembranças deste dia tão especial!</span>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
     container.innerHTML = photos.map((p, idx) => `
       <div class="photo-zoom-container rounded-2xl shadow-sm border border-stone-200 bg-white group cursor-pointer overflow-hidden fade-in-on-scroll" onclick="weddingApp.openGalleryLightbox('wedding', ${idx})">
         <div class="h-64 md:h-80 relative">

@@ -135,65 +135,8 @@ const DEFAULT_WEDDING_DATA = {
     }
   ],
 
-  // Fotos da Celebração das Bodas de Ouro
-  weddingGallery: [
-    {
-      id: "wed-1",
-      title: "A Renovação dos Votos no Altar",
-      category: "cerimonia",
-      image: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80",
-      caption: "Renovando as promessas de 1976 com a mesma emoção e devoção."
-    },
-    {
-      id: "wed-2",
-      title: "O Brinde Dourado dos 50 Anos",
-      category: "festa",
-      image: "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=900&q=80",
-      caption: "Brindando ao amor verdadeiro, à saúde e a cada memória compartilhada."
-    },
-    {
-      id: "wed-3",
-      title: "José & Cida: Eternos Namorados",
-      category: "noivos",
-      image: "assets/images/hero-elderly-hands-table.jpg",
-      caption: "O brilho nos olhos de quem construiu uma história de honra e união."
-    },
-    {
-      id: "wed-4",
-      title: "A Bênção com Filhos e Netos",
-      category: "familia",
-      image: "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=900&q=80",
-      caption: "O maior legado de meio século: três gerações abraçadas em amor."
-    },
-    {
-      id: "wed-5",
-      title: "A Valsa das Bodas de Ouro",
-      category: "danca",
-      image: "https://images.unsplash.com/photo-1545232979-8bf68ee9b1af?auto=format&fit=crop&w=900&q=80",
-      caption: "Dançando como se fosse o primeiro baile na primavera de 1976."
-    },
-    {
-      id: "wed-6",
-      title: "Corte do Bolo Dourado de 50 Anos",
-      category: "festa",
-      image: "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=900&q=80",
-      caption: "Celebrando 50 anos de doçura, respeito e momentos inesquecíveis."
-    },
-    {
-      id: "wed-7",
-      title: "Amigos de Uma Vida Inteira",
-      category: "padrinhos",
-      image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=900&q=80",
-      caption: "Amizades leais que caminharam ao nosso lado desde a juventude."
-    },
-    {
-      id: "wed-8",
-      title: "Chuva de Ouro e Brilhos",
-      category: "especiais",
-      image: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=900&q=80",
-      caption: "Uma festa abençoada e inesquecível para comemorar o Jubileu de Ouro!"
-    }
-  ],
+  // Fotos da Celebração das Bodas de Ouro (serão adicionadas posteriormente)
+  weddingGallery: [],
 
   // Fotos enviadas pelos convidados
   guestPhotos: [

@@ -3,7 +3,7 @@
  * Suporta LocalStorage, sincronização em tempo real e moderação de convidados.
  */
 
-const STORAGE_KEY = "BODAS_50_ANOS_JOSE_CIDA_V5";
+const STORAGE_KEY = "BODAS_50_ANOS_JOSE_CIDA_V6";
 
 class WeddingStoreClass {
   constructor() {
@@ -13,7 +13,7 @@ class WeddingStoreClass {
 
   loadState() {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("BODAS_50_ANOS_JOSE_CIDA_V4");
+      const saved = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("BODAS_50_ANOS_JOSE_CIDA_V5") || localStorage.getItem("BODAS_50_ANOS_JOSE_CIDA_V4");
       if (saved) {
         const parsed = JSON.parse(saved);
         const savedSettings = parsed.settings || {};
@@ -66,6 +66,11 @@ class WeddingStoreClass {
         visibility.gifts = true;
         savedSettings.sectionsVisibility = visibility;
 
+        // Remove fotos de demonstração antigas do álbum das Bodas (wed-1 até wed-8)
+        const demoWedIds = ["wed-1", "wed-2", "wed-3", "wed-4", "wed-5", "wed-6", "wed-7", "wed-8"];
+        const loadedWeddingGallery = (Array.isArray(parsed.weddingGallery) ? parsed.weddingGallery : (DEFAULT_WEDDING_DATA.weddingGallery || []))
+          .filter(p => !demoWedIds.includes(p.id));
+
         // Remove convidados de demonstração antigos para controle 100% real
         const loadedAttended = (parsed.attendedGuests || DEFAULT_WEDDING_DATA.attendedGuests || [])
           .filter(g => !["att-1", "att-2", "att-3"].includes(g.id))
@@ -92,7 +97,7 @@ class WeddingStoreClass {
           settings: { ...DEFAULT_WEDDING_DATA.settings, ...savedSettings },
           storyMilestones: parsed.storyMilestones || DEFAULT_WEDDING_DATA.storyMilestones,
           momentsGallery: parsed.momentsGallery || DEFAULT_WEDDING_DATA.momentsGallery,
-          weddingGallery: parsed.weddingGallery || DEFAULT_WEDDING_DATA.weddingGallery,
+          weddingGallery: loadedWeddingGallery,
           guestPhotos: parsed.guestPhotos || DEFAULT_WEDDING_DATA.guestPhotos,
           attendedGuests: loadedAttended,
           messages: parsed.messages || DEFAULT_WEDDING_DATA.messages,

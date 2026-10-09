@@ -85,6 +85,24 @@ class WeddingAdminPanel {
       });
     }
 
+    // Seleção de arquivo local para foto do álbum
+    const adminFileInput = document.getElementById("admin-photo-file");
+    if (adminFileInput) {
+      adminFileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (loadEvt) => {
+            const urlInput = document.getElementById("admin-photo-url");
+            if (urlInput) {
+              urlInput.value = loadEvt.target.result;
+            }
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    }
+
     // Form Adicionar Marco da História
     const addStoryForm = document.getElementById("admin-add-story-form");
     if (addStoryForm) {
@@ -994,6 +1012,7 @@ class WeddingAdminPanel {
     showToast("Foto adicionada com sucesso ao álbum das Bodas! 📸");
     document.getElementById("admin-add-photo-form").reset();
     this.renderPhotosList();
+    if (window.weddingApp) weddingApp.renderWeddingGallery();
   }
 
   deleteMoment(id) {
@@ -1008,6 +1027,7 @@ class WeddingAdminPanel {
     if (confirm("Remover esta foto do Casamento?")) {
       WeddingStore.deleteWeddingPhoto(id);
       this.renderPhotosList();
+      if (window.weddingApp) weddingApp.renderWeddingGallery();
       showToast("Foto removida.");
     }
   }
